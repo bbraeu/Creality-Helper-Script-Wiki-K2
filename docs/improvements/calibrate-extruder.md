@@ -1,4 +1,4 @@
-# Calibrate Extruder — K2 Plus
+# Calibrate Extruder — K2
 
 Extruder calibration (also called e-step calibration) ensures the printer extrudes exactly the amount of filament requested. This improves dimensional accuracy and reduces under/over-extrusion.
 
@@ -13,7 +13,7 @@ Calibrate your extruder when:
 - Noticing consistent under or over-extrusion that is not resolved by slicer flow rate adjustments
 - After any extruder hardware modification
 
-The K2 Plus uses a direct drive extruder. The stock `rotation_distance` in `printer.cfg` is `6.9` — this is a good starting point but may need fine-tuning for your specific hardware.
+The K2 uses a direct drive extruder. Creality's published K2 config uses `rotation_distance: 6.9` — check the `[extruder]` section of your own `printer.cfg`; it is a good starting point but may need fine-tuning for your specific hardware.
 
 ---
 
@@ -60,9 +60,9 @@ After setting a baseline rotation_distance, fine-tune flow with a calibration cu
 
 ---
 
-## K2 Plus Extruder Notes
+## K2 Extruder Notes
 
-The K2 Plus uses a high-torque dual-drive extruder. Key values in stock `printer.cfg`:
+Key values from Creality's published K2 `printer.cfg` (`F021_CR0CN200400C10`) — your firmware may differ:
 
 ```ini
 [extruder]

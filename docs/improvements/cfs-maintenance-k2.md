@@ -1,6 +1,9 @@
-# CFS Maintenance — K2 Plus Combo
+# CFS Maintenance — K2 Combo
 
 Regular maintenance of the CFS (Color Filament System) keeps filament changes reliable and prevents clogs, failed cuts, and feed errors.
+
+!!! warning "Adapted from the K2 Plus"
+    This page was written for the K2 Plus Combo. Positions and calibration limits differ between models — on the K2, take them from your own `box.cfg` (Creality's published K2 values are listed on the [CFS page](../helper-script/cfs-k2.md#purge-and-wipe-positions-k2-from-crealitys-published-boxcfg)). The maintenance schedule below is a community suggestion, not a Creality specification.
 
 ---
 
@@ -23,10 +26,10 @@ The cutter is the most maintenance-sensitive part of the CFS. A dull or misalign
 ### Cleaning the Cutter
 
 1. Unload all filament from the active slot.
-2. Navigate to the cut position manually using the touchscreen or via Fluidd console:
+2. Navigate to the pre-cut position (`pre_cut_pos_x` / `pre_cut_pos_y` in `box.cfg`; X10 Y150 in Creality's published K2 config) after homing, e.g. via the Fluidd console:
     ```gcode
     G90
-    G1 X10 Y200 F12000  ; move to pre-cut position
+    G1 X10 Y150 F12000  ; pre-cut position on the K2 — check your box.cfg
     ```
 3. Use a soft brush or compressed air to remove filament debris from the cutter blade area.
 4. Check the blade for nicks or buildup.
@@ -40,23 +43,23 @@ After cleaning or if cuts are inconsistent, re-calibrate:
 The calibrated `cut_pos_x` value is saved to the `SAVE_CONFIG` block in `printer.cfg`:
 ```ini
 #*# [box]
-#*# cut_pos_x = -7.40
+#*# cut_pos_x = <calibrated value>
 ```
 
-Check this value is within the valid range: `-5.5` to `-9.5` (as defined by `check_cut_pos_x_max` and `check_cut_pos_x_min` in `box.cfg`).
+Check this value is within the valid range defined by `check_cut_pos_x_max` and `check_cut_pos_x_min` in your `box.cfg`.
 
 ---
 
 ## Purge Chute Maintenance
 
-Purged filament collects in the chute area at X=133–160, Y=378. Over time this can build up and cause the wiper to miss.
+Purged filament collects in the chute area at the purge position (`extrude_pos_x/y` in `box.cfg`). Over time this can build up and cause the wiper to miss.
 
 ### Cleaning
 
 1. Cool the printer fully.
 2. Open the front enclosure panel.
 3. Remove any accumulated purge strings and blobs from the chute area.
-4. Clean the silicone wiper pad (at X=160–170, Y=374) with IPA if filament residue has built up.
+4. Clean the silicone wiper pad (`clean_pos_left_x` … `clean_pos_right_x` in `box.cfg`) with IPA if filament residue has built up.
 
 ---
 

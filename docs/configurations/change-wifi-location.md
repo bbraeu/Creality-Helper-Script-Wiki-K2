@@ -1,6 +1,6 @@
-# Change WiFi Location — K2 Plus
+# Change WiFi Location — K2
 
-The K2 Plus connects to your local WiFi network during initial setup. If you move the printer or change your network, you can reconnect directly from the touchscreen.
+The K2 connects to your local WiFi network during initial setup. If you move the printer or change your network, you can reconnect directly from the touchscreen.
 
 ---
 
@@ -17,7 +17,7 @@ The K2 Plus connects to your local WiFi network during initial setup. If you mov
 
 After connecting, the IP address is shown in **Settings → Network**.
 
-You can also find it from your router's DHCP client list — look for a device named `K2Plus-XXXX` where `XXXX` is the last 4 characters of your printer's MAC address.
+You can also find it from your router's DHCP client list — look for the printer's hostname (on the K2 Plus it is `K2Plus-XXXX`, with the last 4 characters of the MAC address; the K2 base pattern has not been verified — helper option 32 shows the hostname).
 
 ---
 
@@ -33,4 +33,4 @@ After a factory reset the printer loses its WiFi credentials. Reconnect from the
 
 **Settings → Network → select your network → enter password**
 
-Root access must also be re-enabled after a factory reset. See [Enable Root Access](../firmwares/install-and-update-rooted-firmware-k2plus.md#enable-root-access).
+Root access must also be re-enabled after a factory reset. See [Enable Root Access](../firmwares/install-and-update-rooted-firmware-k2.md#enable-root-access).

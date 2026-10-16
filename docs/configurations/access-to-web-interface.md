@@ -1,12 +1,12 @@
-# Access to Web Interface — K2 Plus
+# Access to Web Interface — K2
 
-The K2 Plus ships with **Fluidd pre-installed** at port `4408`. No installation is required to access it.
+The K2 ships with **Fluidd pre-installed** at port `4408`. No installation is required to access it.
 
 ---
 
 ## Fluidd Web Interface
 
-Fluidd is the primary web interface on the K2 Plus.
+Fluidd is the primary web interface on the K2.
 
 Open your browser and navigate to:
 
@@ -42,16 +42,5 @@ http://<printer-ip>
 
 This is used by **Creality Print** for WiFi printing.
 
-!!! warning
-    If you remove the Creality Web Interface using the Helper Script Customize Menu, WiFi printing with Creality Print will stop working. You can restore it at any time from the same menu.
-
----
-
-## Setting Fluidd or Mainsail as Default (Port 80)
-
-With the Helper Script you can replace the Creality Web Interface with Fluidd or Mainsail on port 80. Useful for hardware that does not support custom port numbers.
-
-Configure from Helper Script → Customize Menu → **Remove & Restore Creality Web Interface**.
-
-- **Fluidd** as default: accessible at both `http://<ip>/` and `http://<ip>:4408/`
-- **Mainsail** as default: accessible at both `http://<ip>/` and `http://<ip>:4409/`
+!!! note "No port-80 replacement in this helper script"
+    The K1 helper script had a Customize Menu to replace the Creality web interface on port 80 with Fluidd or Mainsail. The K2 helper script has no such option — the Creality web interface stays on port 80 so that Creality Print keeps working. Use ports `4408` (Fluidd) and `4409` (Mainsail).

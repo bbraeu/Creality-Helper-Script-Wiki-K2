@@ -1,15 +1,18 @@
-# Entware Package Manager — K2 Plus
+# Entware Package Manager — K2
 
-Entware is a software package manager for embedded systems. It provides hundreds of Linux packages via `opkg` on the K2 Plus.
+Entware is a software package manager for embedded systems. It provides hundreds of Linux packages via `opkg` on the K2.
 
-!!! success "Tested and working on K2 Plus"
-    Entware was successfully installed using a Python-based wget shim to bypass the ARM ABI incompatibility.
+!!! success "Tested on the K2 Plus"
+    Entware was successfully installed on the K2 Plus using a Python-based wget shim. The K2 uses the same firmware family and installer.
+
+!!! note "Needed by options 14–17"
+    OctoEverywhere, Mobileraker Companion, OctoApp Companion and Git Backup all install their dependencies (`git`, `python3`, `inotifywait`, `ffmpeg`, ...) with Entware. Install Entware (option 13) first.
 
 ---
 
 ## Background
 
-The K2 Plus uses **armhf** (hard-float ARM ABI). Standard Entware installation requires `wget` which is not present on the K2 Plus. The solution uses a Python script to simulate `wget` for the bootstrap installer, after which the real `wget` is installed via `opkg`.
+The K2 uses **armhf** (hard-float ARM ABI). Standard Entware installation requires `wget` which is not present on the K2. The solution uses a Python script to simulate `wget` for the bootstrap installer, after which the real `wget` is installed via `opkg`.
 
 Full credit to [vsevolod-volkov](https://github.com/vsevolod-volkov/K2Plus-entware) for this approach.
 
@@ -23,7 +26,7 @@ Install from the helper script:
 sh /mnt/UDISK/helper-script/helper.sh
 ```
 
-Select **15) Entware Package Manager**.
+Select **13) Entware Package Manager**.
 
 The installer will:
 
@@ -37,7 +40,7 @@ The installer will:
 
 ## Installing Packages
 
-After installation, select option 15 again to install useful packages:
+The installer offers to install useful packages right away. Later, select option 13 again — it then shows a small menu (*Install useful packages*, *Update package list*, *Open opkg shell*):
 
 | Package | Description |
 |---|---|
@@ -60,6 +63,12 @@ opkg install <package-name>
 ## After Reboot
 
 Entware PATH is added to `rc.local` automatically. After reboot, `opkg` and all installed packages are available immediately.
+
+---
+
+## Updating Packages
+
+Use **Tools menu → 30) Update Entware packages** (`opkg update && opkg upgrade`).
 
 ---
 

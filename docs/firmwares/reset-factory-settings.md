@@ -1,4 +1,4 @@
-# Reset Factory Settings — K2 Plus
+# Reset Factory Settings — K2
 
 A factory reset wipes all user data and returns the printer to its out-of-box state. Use this before installing a new firmware version or when troubleshooting persistent issues.
 
@@ -29,16 +29,16 @@ Reconnect to your WiFi network from **Settings → Network** after restarting.
 
 ---
 
-## Method 2 — SSH with Helper Script
+## Method 2 — S58factoryreset Init Script
 
-!!! note
-    Only available if the Helper Script is already installed.
+!!! warning "Unverified on the K2"
+    This method was documented in the K2 Plus wiki. The K2 helper script does **not** install `S58factoryreset`, and it has not been verified that this script exists on the K2 base model. Check with `ls /etc/init.d/` before relying on it.
 
 ```bash
 /etc/init.d/S58factoryreset reset
 ```
 
-This preserves user preferences and network settings while resetting printer configuration.
+According to the K2 Plus wiki, this preserves user preferences and network settings while resetting printer configuration.
 
 ---
 

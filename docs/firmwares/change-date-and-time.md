@@ -1,6 +1,6 @@
-# Change Date & Time — K2 Plus
+# Change Date & Time — K2
 
-The K2 Plus syncs its clock via NTP (Network Time Protocol) when connected to the internet. If the date and time are incorrect it can cause SSL certificate errors when cloning the Helper Script.
+The K2 syncs its clock via NTP (Network Time Protocol) when connected to the internet. If the date and time are incorrect it can cause SSL certificate errors when downloading the Helper Script or its components.
 
 ---
 
@@ -38,7 +38,7 @@ date 060414302026
 
 ## Set Timezone
 
-The K2 Plus timezone is configured in `system_config.json`. To change it:
+The K2 timezone is configured in `system_config.json`. To change it:
 
 ```bash
 # View current timezone setting
@@ -50,19 +50,15 @@ python3 -c "import json; d=json.load(open('/mnt/UDISK/creality/userdata/config/s
 
 ---
 
-## Fix SSL Errors When Cloning
+## Fix SSL Errors When Downloading
 
-If you see SSL certificate errors when running `git clone`:
+A wrong system clock makes HTTPS certificate checks fail — for example when downloading the helper script with Python, or when `git` (installed via Entware) clones a repository for OctoEverywhere, Mobileraker Companion, OctoApp or Git Backup.
 
 ```bash
 # Sync time first
 /etc/init.d/S98sysntpd restart
 sleep 10
-
-# If still failing, disable SSL verification temporarily
-git config --global http.sslVerify false
-git clone --depth 1 https://github.com/sw3defy/Creality-Helper-Script-K2-Plus.git /mnt/UDISK/helper-script
-
-# Re-enable after cloning
-git config --global http.sslVerify true
+date
 ```
+
+Then run the download or installer again. Avoid disabling certificate verification (`git config --global http.sslVerify false`) — fix the clock instead.

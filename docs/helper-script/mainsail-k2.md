@@ -1,6 +1,6 @@
-# Mainsail — K2 Plus
+# Mainsail — K2
 
-Mainsail is an alternative web interface to Fluidd. It is not pre-installed on the K2 Plus but can be added by the Helper Script on port `4409`, running alongside the stock Fluidd installation.
+Mainsail is an alternative web interface to Fluidd. It is not pre-installed on the K2 but can be added by the Helper Script on port `4409`, running alongside the stock Fluidd installation.
 
 ---
 
@@ -53,17 +53,10 @@ You can use both simultaneously — they share the same Moonraker backend and pr
 
 ## Mainsail Configuration
 
-Mainsail stores its configuration in `mainsail.cfg`. After installation, add this include to your `printer.cfg` if you want Mainsail-specific features:
-
-```bash
-# From SSH
-echo "[include mainsail.cfg]" >> /mnt/UDISK/printer_data/config/printer.cfg
-```
-
-Or add it via the Fluidd/Mainsail editor.
+The helper script does **not** create a `mainsail.cfg` — do not add `[include mainsail.cfg]` to `printer.cfg` (Klipper would fail to start on the missing file). `PAUSE`, `RESUME` and `CANCEL_PRINT` are already defined in the stock `gcode_macro.cfg` with CFS integration, and Mainsail uses them as they are.
 
 ---
 
 ## Camera Setup
 
-Camera support is installed separately via option **11) Camera Support for Fluidd and Mainsail**. Once installed, the camera feed appears automatically in the Mainsail dashboard after boot — no manual configuration required. See the [Camera Support page](../../configurations/configure-camera.md) for details.
+Camera support is installed separately via option **11) Camera Support (Fluidd, Mainsail, Mobileraker)**. Once installed, the camera feed appears automatically in the Mainsail dashboard after boot — no manual configuration required. See the [Camera Support page](../configurations/configure-camera.md) for details.

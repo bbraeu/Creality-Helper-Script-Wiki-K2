@@ -1,6 +1,9 @@
-# OctoEverywhere — K2 Plus
+# OctoEverywhere — K2
 
-OctoEverywhere provides free remote access to your printer from anywhere in the world — including live webcam, full Fluidd/Mainsail control, and AI print failure detection.
+OctoEverywhere provides free remote access to your printer from anywhere in the world — including live webcam, full Fluidd/Mainsail control, AI print failure detection and notifications.
+
+!!! note "Entware required"
+    Install [Entware](entware-k2.md) (option 13) first.
 
 ---
 
@@ -8,20 +11,19 @@ OctoEverywhere provides free remote access to your printer from anywhere in the 
 
 From the Helper Script menu, select **option 14 — OctoEverywhere**.
 
+The helper script:
+
+1. Installs `git`, `git-http` and `bash` with Entware.
+2. Clones the [OctoEverywhere plugin](https://github.com/QuinnDamerell/OctoPrint-OctoEverywhere) to `/mnt/UDISK/octoeverywhere`.
+3. Runs the upstream `install.sh`. The upstream installer detects the K2 itself and installs its Python dependencies and ffmpeg via Entware.
+
+Selecting option 14 again runs the upstream installer again (update / repair).
+
 ---
 
-## Setup
+## Linking Your Account
 
-1. After installation, check the Moonraker log for the OctoEverywhere plugin URL:
-    ```bash
-    tail -50 /mnt/UDISK/printer_data/logs/moonraker.log | grep -i octoeverywhere
-    ```
-
-2. Open the URL shown in the log in your browser to link your printer to your OctoEverywhere account.
-
-3. Create a free account at [octoeverywhere.com](https://octoeverywhere.com) if you don't have one.
-
-4. Once linked, access your printer from anywhere at [octoeverywhere.com](https://octoeverywhere.com) or via the OctoEverywhere app.
+At the end, the installer prints a link. **Open that link** in your browser and sign in (or create a free account at [octoeverywhere.com](https://octoeverywhere.com)) to link the printer to your account. Afterwards, access the printer at [octoeverywhere.com](https://octoeverywhere.com) or via the OctoEverywhere app.
 
 ---
 
@@ -31,18 +33,13 @@ From the Helper Script menu, select **option 14 — OctoEverywhere**.
 - **Live webcam** — view your print from anywhere
 - **AI failure detection** — Gadget AI monitors your print and pauses on spaghetti detection
 - **Notifications** — print start, finish, pause, and failure alerts
-- **Secure** — end-to-end encrypted, no port forwarding required
+- **Secure** — encrypted, no port forwarding required
+
+!!! tip "Webcam remotely in Mobileraker"
+    Mobileraker can use OctoEverywhere for remote access. Remotely, only the **MJPEG** webcam works, not WebRTC — answer `y` to *Add MJPEG camera?* when installing [Camera Support](../configurations/configure-camera.md).
 
 ---
 
-## Notes for K2 Plus
+## Removing
 
-OctoEverywhere has been confirmed working on the K2 Plus. The Moonraker plugin installs as a component and starts automatically with Moonraker.
-
-If OctoEverywhere loses connection after a Moonraker restart:
-
-```bash
-/etc/init.d/S56moonraker restart
-```
-
-Then check the log again for the connection status.
+Remove menu (option 19) → **14) OctoEverywhere**. The helper runs the upstream `uninstall.sh` and deletes `/mnt/UDISK/octoeverywhere`.

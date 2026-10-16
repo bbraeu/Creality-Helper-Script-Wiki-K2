@@ -1,9 +1,9 @@
-# SSH Connection — K2 Plus
+# SSH Connection — K2
 
-SSH gives you full command-line access to the K2 Plus Linux system. It is required for installing the Helper Script and for most advanced configuration.
+SSH gives you full command-line access to the K2 Linux system. It is required for installing the Helper Script and for most advanced configuration.
 
 !!! note "Enable root access first"
-    SSH root access must be enabled before you can connect. See [Enable Root Access](install-and-update-rooted-firmware-k2plus.md#enable-root-access).
+    SSH root access must be enabled before you can connect. See [Enable Root Access](install-and-update-rooted-firmware-k2.md#enable-root-access).
 
 ---
 
@@ -16,7 +16,7 @@ SSH gives you full command-line access to the K2 Plus Linux system. It is requir
 | Username | `root` |
 | Password | `creality_2024` |
 
-!!! warning "K2 Plus password is different from K1"
+!!! warning "K2 password is different from K1"
     The default root password is **`creality_2024`** — not `creality_2023` as on K1 Series printers.
 
 Find your printer's IP address in **Settings → Network** on the touchscreen.
@@ -71,10 +71,10 @@ BusyBox v1.33.2 built-in shell (ash)
  -----------------------------------------------------
  Tina 5.0, OpenWrt 21.02-SNAPSHOT r0-bdf710c83
  -----------------------------------------------------
-root@K2Plus-XXXX:~#
+root@<hostname>:~#
 ```
 
-The hostname suffix (e.g. `DE6C`) is the last 4 characters of your printer's MAC address.
+On the K2 Plus the hostname is `K2Plus-XXXX` (last 4 characters of the MAC address). The hostname pattern on the K2 base model has not been verified — helper option 32 (System information) shows it.
 
 ---
 

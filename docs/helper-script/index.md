@@ -1,274 +1,69 @@
-# Helper Script for Creality K2 Plus
+# Helper Script for Creality K2
+
+The Creality K2 Helper Script is a menu-driven shell script for the **Creality K2** (base model, 260 × 260 mm) and **K2 Combo (with CFS)**. It installs features by writing Klipper `.cfg` files to `/mnt/UDISK/printer_data/config/`, extending the stock Moonraker, and adding a few services — see [Install Helper Script](helper-script-installation.md) for the installation commands.
+
+It is forked from [sw3defy's K2 Plus Helper Script](https://github.com/sw3defy/Creality-Helper-Script-K2-Plus), which is based on [Guilouz's Creality Helper Script](https://github.com/Guilouz/Creality-Helper-Script).
+
+Repository: [github.com/bbraeu/Creality-Helper-Script-K2-Base](https://github.com/bbraeu/Creality-Helper-Script-K2-Base)
 
 ---
 
-# Install Helper Script — K2 Plus
+## Hardware Detection
 
-The Creality K2 Plus Helper Script is a native shell-based tool built specifically for the K2 Plus and K2 Plus Combo. It installs features by writing Klipper `.cfg` files to `/mnt/UDISK/printer_data/config/` and extending Moonraker non-destructively — without overwriting any stock firmware files.
+The K2 family (K2 / K2 Pro / K2 Plus) shares firmware and stock macros but differs in bed size, chamber heater and fans. Instead of assuming one model, the script reads the hardware from your stock config every time it starts. Only files Klipper actually loads are read (`printer.cfg` and its `[include]` tree) — SAVE_CONFIG backups such as `printer-<date>.cfg` in the same folder are ignored:
 
-!!! warning "K2 Plus only"
-    This helper script is written specifically for the **Creality K2 Plus** and **K2 Plus Combo**.
-    It will not work on K1, K1C, K1 Max, or Ender-3 V3 Series printers.
-
-!!! note "Before you begin"
-    - Root access must be enabled. See [Enable Root Access](../firmwares/install-and-update-rooted-firmware-k2plus.md#enable-root-access).
-    - The printer must have completed its startup sequence and be on the home screen.
-    - An internet connection is required for features that download additional components (Mainsail, KAMP, Timelapse).
-
----
-
-## How It Works
-
-The helper script takes a safe, reversible approach to every feature:
-
-| What it does | How |
+| Detected | From |
 |---|---|
-| Extends Moonraker | Writes `/mnt/UDISK/printer_data/config/moonraker.conf` with `[include /usr/share/moonraker/moonraker.conf]` at the top, then patches the startup script to load it |
-| Adds Klipper features | Writes `.cfg` files to `/mnt/UDISK/printer_data/config/` and adds `[include]` lines to `printer.cfg` |
-| Service restarts | Uses `/etc/init.d/S55klipper`, `S56moonraker`, `S80nginx` — **not** `supervisorctl` (which does not exist on K2 Plus) |
-| Uninstall | Removes the `.cfg` file, removes the `[include]` line, restarts Klipper. Moonraker patch is reversible via the Remove menu. |
-| Stock files | Never modified. `/usr/share/moonraker/moonraker.conf`, `/etc/nginx/nginx.conf`, and all `/usr/share/klipper/` files are left untouched. |
+| Model (K2 / K2 Pro / K2 Plus) | `position_max` of `[stepper_x]` (262 mm on the K2) |
+| Usable bed area | `mesh_min` / `mesh_max` of `[bed_mesh]` — the travel limits reach past the bed (X −12…262, Y up to 296.5 on the K2) |
+| Chamber heater | a `[heater_generic ...chamber...]` section |
+| Chamber fan | a `[temperature_fan ...chamber...]` section |
+| Chamber sensor | the chamber heater, else a `[temperature_sensor ...chamber...]` (`chamber_temp` on the K2), else the chamber fan |
+| Part cooling enable / aux fan | `[output_pin fan0_en]` (a `static_digital_output` on the K2, so it is left alone), `[output_pin fan2]` |
+| Fan PWM scale | `scale` of `[output_pin fan0]` / `[output_pin fan2]` (255 on the K2) |
+| Z tilt | a `[z_tilt]` section |
+
+The menu header shows the result, for example:
+
+```
+   Detected: K2 (no chamber heater, bed mesh 20,20 to 255,255)
+```
+
+Generated macros only contain what your hardware has. On a K2 base model this means: no `CHAMBER_HEAT` or `PID_CHAMBER` (there is no chamber heater), `CHAMBER_STATUS` reads the existing chamber sensor, `CHAMBER_COOL` only if a chamber fan exists, `Z_TILT_CALIBRATE` only with a `[z_tilt]` section, and `WARMUP` stays inside the bed mesh area. The same script still works on the K2 Pro and K2 Plus.
 
 ---
 
-## Installation
+## Menu Overview
 
-Connect via SSH. See [SSH Connection](../firmwares/ssh-connection.md).
-
-The K2 Plus does **not** have `git`, `wget`, or `curl` available in the stock firmware. Use Python3 to download and install the helper script.
-
-Connect via SSH and run:
-
-```bash
-python3 -c "
-import urllib.request, zipfile, os, shutil
-print('Downloading...')
-urllib.request.urlretrieve(
-    'https://github.com/sw3defy/Creality-Helper-Script-K2-Plus/archive/refs/heads/main.zip',
-    '/tmp/helper.zip'
-)
-print('Extracting...')
-with zipfile.ZipFile('/tmp/helper.zip', 'r') as z:
-    z.extractall('/tmp/')
-if os.path.exists('/mnt/UDISK/helper-script'):
-    shutil.rmtree('/mnt/UDISK/helper-script')
-shutil.move('/tmp/Creality-Helper-Script-K2-Plus-main', '/mnt/UDISK/helper-script')
-os.remove('/tmp/helper.zip')
-print('Done')
-"
-```
-
-Make the scripts executable and run:
-
-```bash
-chmod +x /mnt/UDISK/helper-script/helper.sh
-chmod +x /mnt/UDISK/helper-script/scripts/*.sh
-sh /mnt/UDISK/helper-script/helper.sh
-```
-
-!!! note "Install path"
-    The K2 Plus helper script installs to `/mnt/UDISK/helper-script/` — not `/usr/data/helper-script/` as on K1 Series.
-
-!!! note "No git/wget/curl on K2 Plus"
-    Unlike the K1 Series, the K2 Plus stock firmware does not include `git`, `wget`, or `curl`. Python3 is the only download tool available without installing Entware first.
-
----
-
-## Main Menu
-
-When you run the script you will see:
-
-```
-======================================================
-   Creality K2 Plus Helper Script
-======================================================
-   https://sw3defy.github.io/Creality-Helper-Script-Wiki-K2-Plus
-======================================================
-
-  [Install] Menu
-  --- Step 1: Foundation (install first) ---
-    1) Moonraker Extensions & Update Manager  [recommended first]
-
-  --- Step 2: Print macros ---
-    2) Fans Control Macros                    [needed by START_PRINT]
-    3) Useful Macros (START_PRINT / END_PRINT)
-    4) Save Z-Offset Macros
-    5) M600 Filament Change Support
-
-  --- Step 3: Leveling & calibration ---
-    6) Klipper Adaptive Meshing & Purging (KAMP)
-    7) Improved Shapers Calibrations
-
-  --- Step 4: Web interface & camera ---
-    8) Fluidd (install/update/repair - port 4408)
-    9) Mainsail (install/update/repair - port 4409)
-   10) Moonraker Timelapse
-   11) Camera Support for Fluidd and Mainsail
-   12) HelixScreen (touchscreen UI)
-
-  --- Step 5: Remote access & notifications ---
-   13) OctoEverywhere
-   14) Mobileraker Companion
-   15) Entware Package Manager
-   16) Git Backup
-
-  [Remove] Menu
-   17) Remove a feature
-
-  [Backup & Restore] Menu
-   18) Backup Klipper configuration
-   19) Restore Klipper configuration
-
-  [Tools] Menu
-   20) Restart Klipper
-   21) Restart Moonraker
-   22) Restart Nginx
-   23) View Klipper log
-   24) View Moonraker log
-   25) Show installed features
-
-    0) Exit
-
-  Enter choice:
-```
-
----
-
-## Recommended Installation Order
-
-The menu is already arranged in the correct dependency order — install top to bottom:
-
-1. **Moonraker Extensions** (option 1) — always first. Sets up the Update Manager, enables object processing, and creates the persistent Moonraker config that all other features build on.
-2. **Fans Control Macros** (option 2) — before Useful Macros. The `START_PRINT` macro references the `CHAMBER_HEAT` and `FANS_OFF` macros that this installs.
-3. **Useful Macros** (option 3) — installs `START_PRINT`, `END_PRINT`, `PAUSE`, `RESUME`. Configure your slicer start/end G-code after this step.
-4. **Save Z-Offset Macros** (option 4) and **M600** (option 5) — optional, in any order.
-5. **KAMP** (option 6) — requires Moonraker Extensions (object processing). Install after option 1.
-6. **Improved Shapers** (option 7) — independent, any time after Klipper is running.
-7. **Fluidd, Mainsail, Timelapse, Camera, HelixScreen** (options 8–12) — install in any order, any time.
-8. **Remote access & notifications** (options 13–16) — install in any order, any time.
-
----
-
-## Update
-
-Once Moonraker Extensions is installed, the Update Manager panel in Fluidd shows available updates:
-
-- Go to **Settings → Software Updates** in Fluidd
-- Click **Update** next to `creality-helper-script`
-
-Or update manually via SSH:
-
-```bash
-python3 -c "
-import urllib.request, zipfile, os, shutil
-print('Downloading update...')
-urllib.request.urlretrieve(
-    'https://github.com/sw3defy/Creality-Helper-Script-K2-Plus/archive/refs/heads/main.zip',
-    '/tmp/helper.zip'
-)
-with zipfile.ZipFile('/tmp/helper.zip', 'r') as z:
-    z.extractall('/tmp/')
-for f in os.listdir('/tmp/Creality-Helper-Script-K2-Plus-main'):
-    src = '/tmp/Creality-Helper-Script-K2-Plus-main/' + f
-    dst = '/mnt/UDISK/helper-script/' + f
-    if os.path.isdir(src):
-        if os.path.exists(dst): shutil.rmtree(dst)
-        shutil.copytree(src, dst)
-    else:
-        shutil.copy2(src, dst)
-shutil.rmtree('/tmp/Creality-Helper-Script-K2-Plus-main')
-os.remove('/tmp/helper.zip')
-print('Update complete')
-"
-```
-
----
-
-## Uninstall Everything
-
-To completely remove the helper script and all installed features:
-
-```bash
-# Remove all installed .cfg files and includes
-sh /mnt/UDISK/helper-script/helper.sh
-# Select option 17 (Remove menu) and remove each feature
-
-# Restore Moonraker startup to stock
-cp /etc/rc.d/S56moonraker.orig /etc/rc.d/S56moonraker 2>/dev/null || \
-  sed -i 's|CONF=/mnt/UDISK/printer_data/config/moonraker.conf|CONF=/usr/share/moonraker/moonraker.conf|g' /etc/rc.d/S56moonraker
-
-# Restart services
-/etc/init.d/S55klipper restart
-/etc/init.d/S56moonraker restart
-
-# Remove the helper script directory
-rm -rf /mnt/UDISK/helper-script
-```
-
----
-
-## Installed Features Location
-
-All files written by the helper script:
-
-| Feature | Config file | Location |
+| Option | Feature | Page |
 |---|---|---|
-| Moonraker Extensions | `moonraker.conf` | `/mnt/UDISK/printer_data/config/` |
-| Fans Control Macros | `fans_control.cfg` | `/mnt/UDISK/printer_data/config/` |
-| Useful Macros | `useful_macros.cfg` | `/mnt/UDISK/printer_data/config/` |
-| KAMP | `KAMP/KAMP_Settings.cfg` | `/mnt/UDISK/printer_data/config/` |
-| Improved Shapers | `shapers_calibration.cfg` | `/mnt/UDISK/printer_data/config/` |
-| Save Z-Offset Macros | `z_offset_macros.cfg` | `/mnt/UDISK/printer_data/config/` |
-| M600 Support | `m600.cfg` | `/mnt/UDISK/printer_data/config/` |
-| Moonraker Timelapse | `timelapse.cfg` | `/mnt/UDISK/printer_data/config/` |
-| Mainsail | static files | `/usr/share/mainsail/` |
-| Backups | `backups/` | `/mnt/UDISK/helper-script/backups/` |
-| Installed feature log | `.installed` | `/mnt/UDISK/helper-script/` |
-| Moonraker startup patch backup | `S56moonraker.orig` | `/etc/rc.d/` |
-| Nginx backup (if modified) | `.nginx.conf.bak` | `/mnt/UDISK/helper-script/` |
+| 1 | Moonraker Extensions & Update Manager | [Moonraker Extensions](moonraker-k2.md) |
+| 2 | Fans Control Macros | [Fans Control Macros](fans-control-macros-k2.md) |
+| 3 | Useful Macros (PID, leveling, warmup) | [Useful Macros](useful-macros-k2.md) |
+| 4 | Save Z-Offset Macros | [Save Z-Offset Macros](save-z-offset-macros-k2.md) |
+| 5 | M600 Filament Change Support | [M600 Support](m600-support-k2.md) |
+| 6 | Klipper Adaptive Meshing & Purging (KAMP-K2) | [KAMP-K2](klipper-adaptive-meshing-and-purging-k2.md) |
+| 7 | Improved Shapers Calibrations | [Improved Shapers](improved-shapers-calibrations-k2.md) |
+| 8 | Fluidd (install/update/repair — port 4408) | [Fluidd](fluidd-k2.md) |
+| 9 | Mainsail (install/update/repair — port 4409) | [Mainsail](mainsail-k2.md) |
+| 10 | Moonraker Timelapse | [Moonraker Timelapse](moonraker-timelapse-k2.md) |
+| 11 | Camera Support (Fluidd, Mainsail, Mobileraker) | [Camera Support](../configurations/configure-camera.md) |
+| 12 | HelixScreen (touchscreen UI) | [HelixScreen](helixscreen-k2.md) |
+| 13 | Entware Package Manager (needed by 14–17) | [Entware](entware-k2.md) |
+| 14 | OctoEverywhere | [OctoEverywhere](octoeverywhere.md) |
+| 15 | Mobileraker Companion | [Mobileraker Companion](mobileraker-companion-k2.md) |
+| 16 | OctoApp Companion | [OctoApp Companion](octoapp-companion.md) |
+| 17 | Git Backup | [Git Backup](git-backup.md) |
+| 18 | Klipper Gcode Shell Command | [Klipper Gcode Shell Command](gcode-shell-command.md) |
+| 19 | Remove a feature (1–18, same order) | [Install Menu](install-menu/index.md#remove-menu) |
+| 20–23 | Backup / restore Klipper configuration and Moonraker database | [Backup & Restore Menu](backup-menu/index.md) |
+| 24–32 | Restarts, logs, installed features, Entware update, clear logs & cache, system information | [Tools Menu](tools-menu/index.md) |
 
 ---
 
-## Troubleshooting
+## Requirements
 
-**Klipper fails to start after installing a feature**
-
-Check the log:
-```bash
-tail -50 /mnt/UDISK/printer_data/logs/klippy.log
-```
-Most errors are caused by a syntax problem in a new `.cfg` file. The log will show the exact line.
-
-**Moonraker fails to start after installing extensions**
-
-Check the log:
-```bash
-tail -50 /mnt/UDISK/printer_data/logs/moonraker.log
-```
-If the include directive is causing the issue, restore the stock moonraker startup:
-```bash
-cp /etc/rc.d/S56moonraker.orig /etc/rc.d/S56moonraker
-/etc/init.d/S56moonraker restart
-```
-
-**Script says "printer.cfg not found"**
-
-The printer has not finished booting. Wait until you can see the Fluidd interface, then run the script again.
-
-**Git clone fails with "SSL certificate problem"**
-
-```bash
-git config --global http.sslVerify false
-```
-Then retry the clone.
-
-**Permission denied running helper.sh**
-
-```bash
-chmod +x /mnt/UDISK/helper-script/helper.sh
-chmod +x /mnt/UDISK/helper-script/scripts/*.sh
-```
-
-
----
-
+- Creality K2 / K2 Combo (also K2 Pro, K2 Plus)
+- Root SSH access enabled — see [Enable Root Access](../firmwares/install-and-update-rooted-firmware-k2.md#enable-root-access)
+- An SSH client (e.g. MobaXterm or PuTTY on Windows)
+- [Entware](entware-k2.md) (option 13) for OctoEverywhere, Mobileraker Companion, OctoApp Companion and Git Backup

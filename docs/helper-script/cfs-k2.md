@@ -1,9 +1,12 @@
-# CFS — Color Filament System (K2 Plus Combo)
+# CFS — Color Filament System (K2 Combo)
 
-This page covers the built-in CFS (Color Filament System) that ships with the K2 Plus Combo. The CFS is Creality's multi-material hub allowing automatic filament switching between up to 16 spools (4 units × 4 slots each).
+This page covers the built-in CFS (Color Filament System) that ships with the K2 Combo. The CFS is Creality's multi-material hub allowing automatic filament switching between up to 16 spools (4 units × 4 slots each).
 
 !!! note "Combo only"
-    This page applies to the **K2 Plus Combo**. If you have the standalone K2 Plus without the CFS, this hardware is not present and these config sections can be ignored.
+    This page applies to the **K2 Combo**. If you have the standalone K2 without the CFS, this hardware is not present and these config sections can be ignored.
+
+!!! warning "Positions differ per model"
+    Coordinates on this page come from Creality's published K2 config (`config/F021_CR0CN200400C10/box.cfg` in [CrealityOfficial/K2_Series_Klipper](https://github.com/CrealityOfficial/K2_Series_Klipper)). The K2 Plus uses different positions. Your firmware's `box.cfg` is authoritative — check it before changing anything.
 
 ---
 
@@ -62,34 +65,32 @@ I=4 → T2A,  I=5 → T2B,  ...
 A full tool-change triggered by `M8200` or a slicer `Tx` command follows this sequence:
 
 1. **Pre-op** (`CR_BOX_PRE_OPT`) — move toolhead to safe Z height, prepare state
-2. **Move to cut position** — X=10 Y=200 (pre-cut), then execute cut
+2. **Move to cut position** — pre-cut position (`pre_cut_pos_x/y`), then execute cut
 3. **Cut** (`CR_BOX_CUT` / `M8200 C`) — cutter fires at calibrated `cut_pos_x`
 4. **Retract** (`CR_BOX_RETRUDE` / `M8200 R`) — pulls filament back to CFS unit
 5. **Load new filament** (`CR_BOX_EXTRUDE` / `M8200 L I[slot]`) — feeds new filament to toolhead
-6. **Purge/flush** (`CR_BOX_FLUSH` / `M8200 F`) — extrudes purge length at purge position (X=133–160, Y=378)
+6. **Purge/flush** (`CR_BOX_FLUSH` / `M8200 F`) — extrudes purge length at the purge position (`extrude_pos_x/y`)
 7. **End-op** (`CR_BOX_END_OPT`) — restore fans, move to safe position
 
-### Purge and wipe positions (from your calibrated `box.cfg`)
+### Purge and wipe positions (K2, from Creality's published `box.cfg`)
 
-| Position | X | Y |
-|---|---|---|
-| Pre-cut | 10 | 200 |
-| Purge / extrude | 133 | 378 |
-| Wipe left | 135–160 | 378 |
-| Wipe right | 160–170 | 374 |
-| Safe home | 225 | 345 |
-| Clean left boundary | 135 | 378 |
-| Clean right boundary | 160 | 378 |
+| Position | `box.cfg` keys | X | Y |
+|---|---|---|---|
+| Pre-cut | `pre_cut_pos_x` / `pre_cut_pos_y` | 10 | 150 |
+| Purge / extrude | `extrude_pos_x` / `extrude_pos_y` | 115 | 291.5 |
+| Chute swing, left / right | `clean_left_pos_x` / `clean_right_pos_x` | 127 / 137 | 291.5 |
+| Nozzle wiper (silicone), left / right | `clean_pos_left_x` / `clean_pos_right_x`, `clean_pos_middle_y` | 145 / 155 | 291.5 |
+| Safe position | `safe_pos_x` / `safe_pos_y` | 205 | 256 |
 
 ---
 
 ## Calibrated Cut Position
 
-Your printer's cut position has been auto-calibrated and saved in the `SAVE_CONFIG` block of `printer.cfg`:
+Your printer's cut position is auto-calibrated and saved in the `SAVE_CONFIG` block of `printer.cfg`:
 
 ```ini
 #*# [box]
-#*# cut_pos_x = -7.40
+#*# cut_pos_x = <calibrated value>
 ```
 
 !!! warning "Do not remove the SAVE_CONFIG block"
@@ -118,11 +119,12 @@ These macros are defined in `box.cfg` and are available in Fluidd/Mainsail:
 
 ## Slicer Setup (OrcaSlicer)
 
-In OrcaSlicer, configure the K2 Plus Combo as a multi-material printer:
+In OrcaSlicer, configure the K2 Combo as a multi-material printer:
 
 - **Tool change G-code**: Use the `M8200` sequence or the `T[next_extruder]` command.
 - The stock firmware interprets `T0`–`T15` and translates them to the CFS slot addressing automatically.
 - Set **flush/purge volume** to match the values in your `box.cfg` (`BOX_MATERIAL_CHANGE_FLUSH` uses the configured length and velocity).
+- With [KAMP-K2](klipper-adaptive-meshing-and-purging-k2.md), `LINE_PURGE` must come **after** `T[initial_no_support_extruder]` in the start G-code — the CFS loads the filament on `T<n>`.
 
 See the [OrcaSlicer](../slicers/orcaslicer.md) page for full slicer configuration.
 
@@ -133,7 +135,7 @@ See the [OrcaSlicer](../slicers/orcaslicer.md) page for full slicer configuratio
 
 **CFS load/unload fails with key865, key789, key22 errors**
 
-This is a known bug in the stock Creality firmware where all CFS-related macros
+This was found on the K2 Plus stock firmware, where CFS-related macros
 in `box.cfg` and `gcode_macro.cfg` are prefixed with an underscore (e.g.
 `_BOX_QUIT_MATERIAL`, `_WAIT_TEMP_START`). In Klipper, a leading underscore
 makes a macro private/hidden — it cannot be called by the CFS system, the UI,

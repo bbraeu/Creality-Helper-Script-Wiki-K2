@@ -1,14 +1,23 @@
-# Useful Links — K2 Plus
+# Useful Links — K2
 
 ---
 
-## Sw3Defy K2 Plus Resources
+## This Project
 
 | Resource | Link |
 |---|---|
-| This Wiki | [sw3defy.github.io/Creality-Helper-Script-Wiki-K2-Plus](https://sw3defy.github.io/Creality-Helper-Script-Wiki-K2-Plus/) |
-| Helper Script (K2 Plus) | [github.com/sw3defy/Creality-Helper-Script-K2-Plus](https://github.com/sw3defy/Creality-Helper-Script-K2-Plus) |
-| Wiki Repository | [github.com/sw3defy/Creality-Helper-Script-Wiki-K2-Plus](https://github.com/sw3defy/Creality-Helper-Script-Wiki-K2-Plus) |
+| This Wiki | [bbraeu.github.io/Creality-Helper-Script-Wiki-K2-Base](https://bbraeu.github.io/Creality-Helper-Script-Wiki-K2-Base/) |
+| Helper Script (K2) | [github.com/bbraeu/Creality-Helper-Script-K2-Base](https://github.com/bbraeu/Creality-Helper-Script-K2-Base) |
+| Wiki Repository | [github.com/bbraeu/Creality-Helper-Script-Wiki-K2-Base](https://github.com/bbraeu/Creality-Helper-Script-Wiki-K2-Base) |
+
+---
+
+## sw3defy K2 Plus Resources (upstream of this fork)
+
+| Resource | Link |
+|---|---|
+| K2 Plus Wiki | [sw3defy.github.io/Creality-Helper-Script-Wiki-K2-Plus](https://sw3defy.github.io/Creality-Helper-Script-Wiki-K2-Plus/) |
+| K2 Plus Helper Script | [github.com/sw3defy/Creality-Helper-Script-K2-Plus](https://github.com/sw3defy/Creality-Helper-Script-K2-Plus) |
 
 ---
 
@@ -22,14 +31,14 @@
 
 ---
 
-## Creality K2 Plus Official
+## Creality K2 Official
 
 | Resource | Link |
 |---|---|
-| K2 Series Firmware | [crealitycloud.com/software-firmware/firmware/k2-series](https://www.crealitycloud.com/software-firmware/firmware/k2-series) |
-| Creality Open Source | [github.com/CrealityOfficial/K2_Series_Klipper](https://github.com/CrealityOfficial/K2_Series_Klipper) |
+| K2 / K2 Combo Downloads (firmware, manuals) | [creality.com/download/k2-series-3d-printer](https://www.creality.com/download/k2-series-3d-printer) |
+| Creality Download Center | [creality.com/download](https://www.creality.com/download) |
+| Creality Open Source (K2 series Klipper) | [github.com/CrealityOfficial/K2_Series_Klipper](https://github.com/CrealityOfficial/K2_Series_Klipper) |
 | Creality Cloud | [crealitycloud.com](https://www.crealitycloud.com/) |
-| Creality Support | [crealitycloud.com/support](https://www.crealitycloud.com/support) |
 
 ---
 
@@ -43,7 +52,9 @@
 | Moonraker Documentation | [moonraker.readthedocs.io](https://moonraker.readthedocs.io/) |
 | Fluidd Documentation | [docs.fluidd.xyz](https://docs.fluidd.xyz/) |
 | Mainsail Documentation | [docs.mainsail.xyz](https://docs.mainsail.xyz/) |
-| KAMP (Adaptive Meshing) | [github.com/kyleisah/Klipper-Adaptive-Meshing-Purging](https://github.com/kyleisah/Klipper-Adaptive-Meshing-Purging) |
+| KAMP-K2 (Adaptive Meshing for the K2) | [github.com/grant0013/KAMP-K2](https://github.com/grant0013/KAMP-K2) |
+| KAMP (original) | [github.com/kyleisah/Klipper-Adaptive-Meshing-Purging](https://github.com/kyleisah/Klipper-Adaptive-Meshing-Purging) |
+| go2rtc | [github.com/AlexxIT/go2rtc](https://github.com/AlexxIT/go2rtc) |
 
 ---
 
@@ -52,7 +63,19 @@
 | Resource | Link |
 |---|---|
 | OrcaSlicer | [github.com/SoftFever/OrcaSlicer/releases](https://github.com/SoftFever/OrcaSlicer/releases/latest) |
-| Creality Print | [creality.com/pages/download](https://www.creality.com/pages/download) |
+| Creality Print | [creality.com/download](https://www.creality.com/download) |
+
+---
+
+## Apps & Remote Access
+
+| Resource | Link |
+|---|---|
+| OctoEverywhere | [octoeverywhere.com](https://octoeverywhere.com/) |
+| Mobileraker | [mobileraker.com](https://mobileraker.com/) |
+| Mobileraker Companion | [github.com/Clon1998/mobileraker_companion](https://github.com/Clon1998/mobileraker_companion) |
+| OctoApp Companion | [github.com/crysxd/OctoApp-Plugin](https://github.com/crysxd/OctoApp-Plugin) |
+| SimplyPrint K2 Guide | [simplyprint.io/setup-guide/creality/k2](https://simplyprint.io/setup-guide/creality/k2) |
 
 ---
 
@@ -60,18 +83,14 @@
 
 | Resource | Link |
 |---|---|
-| Creality K2 Plus Reddit | [reddit.com/r/crealityk1](https://www.reddit.com/r/crealityk1/) |
+| Wiki Discussions | [github.com/bbraeu/Creality-Helper-Script-Wiki-K2-Base/discussions](https://github.com/bbraeu/Creality-Helper-Script-Wiki-K2-Base/discussions) |
 | Guilouz Discussions | [github.com/Guilouz/Creality-Helper-Script-Wiki/discussions](https://github.com/Guilouz/Creality-Helper-Script-Wiki/discussions) |
-| OctoEverywhere | [octoeverywhere.com](https://octoeverywhere.com/) |
-| Mobileraker | [mobileraker.com](https://mobileraker.com/) |
-| SimplyPrint K2 Guide | [simplyprint.io/setup-guide/creality/k2](https://simplyprint.io/setup-guide/creality/k2) |
 
 ---
 
-## Stock K2 Plus Configuration Files
-
-The stock Klipper config files for the K2 Plus are available in the Guilouz extracted firmware repository:
+## Stock K2-Family Configuration Files
 
 | Resource | Link |
 |---|---|
-| Guilouz K2 Plus Extracted Firmware | [github.com/Guilouz/Creality-K2Plus-Extracted-Firmwares](https://github.com/Guilouz/Creality-K2Plus-Extracted-Firmwares) |
+| Creality K2 series Klipper configs (`config/F021_CR0CN200400C10` = K2) | [github.com/CrealityOfficial/K2_Series_Klipper/tree/main/config](https://github.com/CrealityOfficial/K2_Series_Klipper/tree/main/config) |
+| Guilouz K2 Plus Extracted Firmware (K2 Plus only) | [github.com/Guilouz/Creality-K2Plus-Extracted-Firmwares](https://github.com/Guilouz/Creality-K2Plus-Extracted-Firmwares) |

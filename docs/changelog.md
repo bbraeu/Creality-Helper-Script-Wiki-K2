@@ -1,5 +1,48 @@
 # Changelog
 
+## K2 (Base Model) Adaptation — October 16, 2026
+
+### Wiki
+- **Adapted from the K2 Plus wiki to the Creality K2 / K2 Combo**
+  (260 × 260 × 260 mm, no chamber heater). New site URL:
+  [bbraeu.github.io/Creality-Helper-Script-Wiki-K2-Base](https://bbraeu.github.io/Creality-Helper-Script-Wiki-K2-Base/),
+  script repository [bbraeu/Creality-Helper-Script-K2-Base](https://github.com/bbraeu/Creality-Helper-Script-K2-Base).
+- All `*-k2plus.md` pages renamed to `*-k2.md`; *Heated Chamber* replaced
+  by [Chamber Temperature](improvements/chamber-temperature-k2.md)
+  (sensor, chamber fan, passive heat-soak).
+- Section index pages are now short overviews instead of copies of every sub-page.
+- [Boards Layout](others/boards-layout-k2.md), fan and shaper details now come
+  from Creality's published K2 config (`F021_CR0CN200400C10`), marked as not
+  verified on the physical boards.
+- Firmware pages link to Creality's official K2 download page and warn never to
+  flash K2 Plus / K2 Pro firmware on a K2.
+- Menu numbers updated everywhere; new pages for
+  [OctoApp Companion](helper-script/octoapp-companion.md),
+  [Klipper Gcode Shell Command](helper-script/gcode-shell-command.md) and
+  [Moonraker database backup](helper-script/backup-and-restore-moonraker-database.md);
+  [Git Backup](helper-script/git-backup.md),
+  [Mobileraker Companion](helper-script/mobileraker-companion-k2.md),
+  [KAMP-K2](helper-script/klipper-adaptive-meshing-and-purging-k2.md),
+  [Useful Macros](helper-script/useful-macros-k2.md) and
+  [OrcaSlicer](slicers/orcaslicer.md) rewritten.
+
+### Helper script (documented here)
+- Hardware detection from `printer.cfg` (bed size, chamber heater / fan /
+  sensor, `fan0_en` / `fan2`, `z_tilt`); the menu shows e.g.
+  `Detected: K2 (260x260 bed, no chamber heater)`. Generated macros only
+  contain what the printer has; `WARMUP` uses the real travel limits.
+- **KAMP-K2** (grant0013, v1.1.0) replaces plain KAMP, which never produced an
+  adaptive mesh on the K2.
+- Camera Support: optional MJPEG camera (`k2plus_mjpeg`, ffmpeg on demand) for
+  Mobileraker and remote viewing; nginx port 4408 query-string fix.
+- New: Mobileraker Companion (procd service), OctoEverywhere and OctoApp
+  Companion (upstream installers), Git Backup (procd service, token outside the
+  config folder), Klipper Gcode Shell Command, Moonraker database backup /
+  restore, Tools: update Entware, clear logs & cache, system information.
+- New menu numbering (1–18 install, 19 remove, 20–23 backup, 24–32 tools).
+
+---
+
 ## Camera Fix: Mainsail Black Screen / Fluidd Dependency — June 23, 2026
 ### Fixed
 - **Camera showed black screen in Mainsail (worked only while Fluidd was
@@ -24,7 +67,7 @@
   compensating for the broken video by force-reloading the page when
   no real bytes ever arrived — have also been simplified, since real
   video data now flows immediately on connect.
-- The [Configure Camera](../configurations/configure-camera.md) page
+- The [Configure Camera](configurations/configure-camera.md) page
   has been rewritten to match: it no longer describes the k2rtc.py
   bridge or the iframe/reload workarounds, and the outdated "single
   stream" limitation note has been removed since Fluidd and Mainsail
