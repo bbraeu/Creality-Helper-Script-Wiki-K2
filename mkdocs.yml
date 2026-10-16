@@ -77,6 +77,7 @@ nav:
   - About:
       - About: index.md
       - Changelog: changelog.md
+      - Helper Script Changelog: helper-script-changelog.md
       - Discussions: https://github.com/bbraeu/Creality-Helper-Script-Wiki-K2-Base/discussions
       - Special Thanks: special-thanks.md
       - Camera Support: configurations/configure-camera.md

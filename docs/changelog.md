@@ -27,10 +27,13 @@
   [OrcaSlicer](slicers/orcaslicer.md) rewritten.
 
 ### Helper script (documented here)
-- Hardware detection from `printer.cfg` (bed size, chamber heater / fan /
-  sensor, `fan0_en` / `fan2`, `z_tilt`); the menu shows e.g.
-  `Detected: K2 (260x260 bed, no chamber heater)`. Generated macros only
-  contain what the printer has; `WARMUP` uses the real travel limits.
+- Hardware detection from the config Klipper loads (`printer.cfg` and its
+  includes): model, bed mesh area, chamber heater / sensor / fan, `fan0_en` /
+  `fan2` and their PWM scale, `z_tilt`; the menu shows e.g.
+  `Detected: K2 (no chamber heater, bed mesh 20,20 to 255,255)`. Generated
+  macros only contain what the printer has; `WARMUP` stays inside the bed mesh
+  area; `SET_FAN0` / `SET_FAN2` honour `scale: 255`.
+- Full script history: [Helper Script Changelog](helper-script-changelog.md).
 - **KAMP-K2** (grant0013, v1.1.0) replaces plain KAMP, which never produced an
   adaptive mesh on the K2.
 - Camera Support: optional MJPEG camera (`k2plus_mjpeg`, ffmpeg on demand) for
@@ -72,6 +75,7 @@
   bridge or the iframe/reload workarounds, and the outdated "single
   stream" limitation note has been removed since Fluidd and Mainsail
   can now view the camera independently and at the same time.
+
 ---
 
 ## Timelapse Frame Capture Fix — June 23, 2026
@@ -84,6 +88,26 @@
   failed with `FileNotFoundError`, so no frames were ever captured
   and rendering was skipped. `patch_stock_configs()` now symlinks
   `/usr/bin/wget` to `/opt/bin/wget` on install.
+
+---
+
+## CFS Cut Stall and START_PRINT Crash Fix — June 23, 2026
+### Fixed
+- **CFS cut-position X-axis stall (key789)** — `motor_control.cfg` was
+  missing the closed-loop X-stepper PID/protection tuning block
+  (notably `x_protection_param_prt_track_max_err`), making the X axis
+  trip a position-tracking error during the cut-position move
+  (`CR_BOX_CUT`). The cut never completed cleanly, leaving filament
+  debris that built up over repeated load/unload cycles and caused
+  recurring clogs. `patch_stock_configs()` now restores
+  `motor_control.cfg` from stock automatically if it has been
+  modified or truncated.
+- **START_PRINT crash on empty params** — `M140 S` with no value
+  crashed/shut down the printer when `START_PRINT` was called without
+  explicit BED_TEMP/EXTRUDER_TEMP (e.g. from HelixScreen's
+  file-browser print flow). Fixed to use the macro's own safe default
+  variables instead of raw, unguarded params.
+
 ---
 
 ## helper.sh First-Run Fix — June 22, 2026
@@ -391,20 +415,3 @@ Initial release of the Creality K2 Plus Helper Script Wiki and companion helper 
 
 This wiki is forked from [Guilouz/Creality-Helper-Script-Wiki](https://github.com/Guilouz/Creality-Helper-Script-Wiki).
 For the K1 Series changelog, see the [original changelog](https://guilouz.github.io/Creality-Helper-Script-Wiki/changelog/).
-## CFS Cut Stall and START_PRINT Crash Fix — June 23, 2026
-### Fixed
-- **CFS cut-position X-axis stall (key789)** — `motor_control.cfg` was
-  missing the closed-loop X-stepper PID/protection tuning block
-  (notably `x_protection_param_prt_track_max_err`), making the X axis
-  trip a position-tracking error during the cut-position move
-  (`CR_BOX_CUT`). The cut never completed cleanly, leaving filament
-  debris that built up over repeated load/unload cycles and caused
-  recurring clogs. `patch_stock_configs()` now restores
-  `motor_control.cfg` from stock automatically if it has been
-  modified or truncated.
-- **START_PRINT crash on empty params** — `M140 S` with no value
-  crashed/shut down the printer when `START_PRINT` was called without
-  explicit BED_TEMP/EXTRUDER_TEMP (e.g. from HelixScreen's
-  file-browser print flow). Fixed to use the macro's own safe default
-  variables instead of raw, unguarded params.
----

@@ -1,0 +1,147 @@
+# Helper Script Changelog
+
+The changelog of the helper script itself, as kept in the script repository's
+[CHANGELOG.md](https://github.com/bbraeu/Creality-Helper-Script-K2-Base/blob/main/CHANGELOG.md).
+Entries before October 2026 come from the K2 Plus helper script
+([sw3defy/Creality-Helper-Script-K2-Plus](https://github.com/sw3defy/Creality-Helper-Script-K2-Plus))
+this fork is based on. For the wiki's own history see the [Changelog](changelog.md).
+
+---
+
+## [Unreleased] - 2026-10-16 - K2 (base) support
+
+### Changed
+- **Works on the K2 base model (and K2 Pro / K2 Plus).** `system.sh` now detects
+  the hardware from the config Klipper actually loads (printer.cfg and its
+  include tree, not SAVE_CONFIG backups): model (X `position_max`), usable bed
+  area (`[bed_mesh]` mesh_min/max), chamber heater, chamber sensor, chamber fan,
+  `fan0_en` / `fan2` and their PWM `scale`, and `z_tilt`. Checked against
+  Creality's published K2 config (F021_CR0CN200400C10). The menu header shows
+  the detected printer.
+- Fans Control Macros / Useful Macros are generated for the detected hardware:
+  no `CHAMBER_HEAT` / `PID_CHAMBER` without a chamber heater (K2 base),
+  `CHAMBER_STATUS` uses whichever chamber sensor exists, `SET_FAN2` and
+  `Z_TILT_*` only when present. `WARMUP` stays inside the bed mesh area (it
+  drove to X/Y 345 before, which is out of range on a 260 mm bed).
+- `SET_FAN0` / `SET_FAN2` honour the pins' `scale: 255` (S=255 was 1/255 duty).
+  `fan0_en` is a static output on the K2 and is no longer toggled.
+- `motor_control.cfg` restore takes the stock file from this model's directory
+  in `/rom` (matched by bed size) instead of the hard-coded K2 Plus `F008_*`.
+- Shaper macros no longer mention the K2 Plus probe point / 140 N belt target.
+- **KAMP is now KAMP-K2** (grant0013/KAMP-K2 v1.1.0). Plain upstream KAMP never
+  produced an adaptive mesh on the K2 (prtouch_v3 ignores MESH_MIN/MESH_MAX,
+  master-server runs its own full mesh). Installs `restore_bed_mesh.py`, hijacks
+  `G29` / `BED_MESH_CALIBRATE_START_PRINT`, adds the mesh to `START_PRINT`
+  right after the prepare branch (homed and hot; unknown layouts get a warning
+  instead of a guess) (`scripts/kamp_k2_patch.py`, idempotent, UTF-8/CRLF safe). Re-applied on boot after firmware
+  updates. Remove restores `gcode_macro.cfg`.
+- Camera: optional MJPEG stream (`k2plus_mjpeg`, ffmpeg on demand) registered
+  as "K2 Camera MJPEG" for Mobileraker (free version, notification snapshots)
+  and remote viewing.
+- Menu renumbered (see README).
+
+### Added
+- Mobileraker Companion (Entware python3 + virtualenv + procd service).
+- OctoEverywhere and OctoApp Companion (upstream installers, which support the K2).
+- Git Backup (procd service, token stored outside the config folder).
+- Klipper Gcode Shell Command.
+- Moonraker database backup / restore.
+- Tools: update Entware packages, clear logs & cache, system information.
+
+### Fixed
+- nginx `/go2rtc/api/ws` on port 4408 forwarded `?src=k2plus?src=...` when the
+  client sent a query string (stream not found). Existing installs are repaired
+  when Camera Support is installed again.
+- Reinstalling Camera Support no longer injects a duplicate script into Fluidd's
+  `index.html`, and removing it now removes that script.
+
+## [Unreleased] - 2026-06-17
+
+### Fixed
+- **CFS load/unload failures** — Root cause identified and fixed: stock Creality
+  firmware ships box.cfg and gcode_macro.cfg with all macros prefixed with
+  an underscore (e.g. _BOX_QUIT_MATERIAL, _WAIT_TEMP_START). In Klipper,
+  a leading underscore makes a macro private/hidden, meaning it cannot be called
+  by the CFS system, the UI, or other macros. The helper script now automatically
+  patches these files on startup via patch_stock_configs() in system.sh.
+
+### Errors resolved
+- key865 - retrude error, failed to exit connections
+- key789 - position tracking error on X/Y axes
+- key22 - no trigger on Y after full movement
+- key274 - unknown g-code state: helix_cfs_load
+- Unknown command: WAIT_TEMP_START
+- Unknown command: END_PRINT_POINT
+- Unknown command: PRINT_PREPARE_CLEAR
+- Unknown command: CANCEL_CHAMBER_FAN_SWITCH
+
+
+
+### Also fixed (2026-06-17)
+- **printer.cfg mesh_min edge artifact** — Stock Creality firmware sets
+  `mesh_min: 5,5` which causes the adaptive bed mesh algorithm to probe
+  too close to the bed edge, producing false spike readings at the front-left
+  corner. The helper script now automatically patches this to `mesh_min: 20,20`
+  on startup via `patch_stock_configs()` in `system.sh`.
+- **Duplicate patch_stock_configs function** — Removed a duplicate function
+  that was accidentally added to `system.sh`.
+
+- **useful_macros.sh conflicting macros** — Removed START_PRINT, END_PRINT,
+  PAUSE, RESUME, CANCEL_PRINT from useful_macros.sh. These are already defined
+  in stock gcode_macro.cfg with full CFS integration (BOX_START_PRINT,
+  BOX_END, BOX_END_PRINT etc). Overwriting them broke CFS filament loading
+  and unloading. useful_macros.sh now only installs genuinely new macros:
+  PID_HOTEND, PID_BED, PID_CHAMBER, BED_LEVELING, Z_TILT_CALIBRATE,
+  WARMUP, CHAMBER_HEAT, CHAMBER_COOL, CHAMBER_STATUS.
+
+
+### Also fixed (2026-06-18)
+- **patch_stock_configs not running on boot** — The stock config patches
+  were only applied when helper.sh was run manually from the menu. This
+  meant reboots would revert the fixes. Added install_rc_local_patch()
+  which adds patch_stock_configs to /etc/rc.local so fixes are applied
+  automatically on every boot.
+
+
+### Also fixed (2026-06-22)
+- **Moonraker silently ignoring UDISK extension config** — The stock
+  moonraker init script only loads /usr/share/moonraker/moonraker.conf.
+  The UDISK config at printer_data/config/moonraker.conf (where
+  [timelapse] and the HelixScreen update_manager settings live) was
+  never actually read. Added install_moonraker_include() which wires
+  up the proper [include] directive and avoids a recursive-include
+  loop. This was the root cause of prints getting stuck at 99% /
+  showing as "Cancelled" in history -- TIMELAPSE_RENDER would throw
+  an unregistered-remote-method error mid-END_PRINT and the gcode
+  stream would abort before the file finished reading.
+- **Missing END_PRINT underscore fixes** — _PRINT_PREPARE_CLEAR,
+  _END_PRINT_Z_SAFE, _QMODE_EXIT, _END_PRINT_POINT, and
+  _WAIT_TEMP_START were still called with underscores from inside
+  other macros, even though their definitions were already patched.
+  These are now fixed too.
+
+
+### Also fixed (2026-06-22)
+- **queue_gcode_uploads race condition** — Stock moonraker.conf has
+  this set to False, causing Mainsail/Fluidd to poll for gcode
+  metadata before background extraction finishes on larger files.
+  This produced hundreds of "Metadata not available" errors per
+  upload and made history permanently show "Unknown" as the slicer.
+  install_moonraker_include() now also flips this to True.
+- Fixed install_moonraker_include() returning early when the include
+  line was already present, which skipped any fixes added after it.
+
+
+### Also fixed (2026-06-22)
+- **helper.sh failed on first run for everyone** — SCRIPTS_DIR was
+  already set to .../helper-script/scripts, but the line sourcing
+  system.sh appended another /scripts/ segment, producing a path
+  that doesn't exist (scripts/scripts/system.sh). This crashed
+  helper.sh immediately for any brand new install, before reaching
+  the menu at all. Reported by a user attempting first setup.
+
+### Known issues being investigated
+- useful_macros.sh installs START_PRINT, END_PRINT, PAUSE, RESUME,
+  CANCEL_PRINT macros that conflict with and override the stock Creality
+  versions which have full CFS integration. This will be fixed in a future
+  update to only install macros that do not exist in stock.
