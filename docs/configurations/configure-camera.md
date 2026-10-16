@@ -50,7 +50,10 @@ Select **11) Camera Support (Fluidd, Mainsail, Mobileraker)**.
 The installer asks:
 
 1. **Continue?** — a reboot is required after the install for the camera service to start.
-2. **Add MJPEG camera? [y/n]** — answer `y` if you use Mobileraker (free version, notification snapshots) or want to watch the camera remotely through OctoEverywhere. This needs **ffmpeg**: either `/usr/bin/ffmpeg` or Entware's `/opt/bin/ffmpeg`. If ffmpeg is not found, the MJPEG camera is skipped with a hint — install [Entware](../helper-script/entware-k2.md), run `opkg install ffmpeg`, and install Camera Support again.
+2. **Add MJPEG camera? [y/n]** — answer `y` if you use Mobileraker (free version, notification snapshots) or want to watch the camera remotely through OctoEverywhere.
+3. **Install ffmpeg 5 from Entware? [y/n]** — only asked when [Entware](../helper-script/entware-k2.md) is installed and no ffmpeg 5 is found. A *live* MJPEG stream needs **ffmpeg 5 or newer**: go2rtc refuses the K2's stock ffmpeg 4.3 for transcoding (`ffmpeg: unsupported version: 4.3.6` in `/tmp/go2rtc.log`). Entware provides ffmpeg 5.1 (about 15 MB).
+
+    Without ffmpeg 5 the MJPEG camera is registered in **snapshot mode** instead (`mjpegstreamer-adaptive`, about 1 frame per second). Snapshots work with the stock ffmpeg, so notifications and the free Mobileraker version still get a picture.
 
 At the end it offers to reboot.
 
@@ -58,25 +61,32 @@ At the end it offers to reboot.
 
 ## Webcams Registered in Moonraker
 
-The webcams are stored in Moonraker (absolute URLs with your printer's IP, so Mobileraker can map them through OctoEverywhere):
+The webcams are stored in Moonraker (absolute URLs with your printer's IP, so Mobileraker can map them through OctoEverywhere). They use port **4408** — the stock Fluidd server, which always exists; port 4409 only exists when Mainsail is installed:
 
 | Name | Service | Stream URL | Snapshot URL |
 |---|---|---|---|
-| **K2 Camera** | `webrtc-go2rtc` | `http://<printer-ip>:4409/go2rtc/` | `http://<printer-ip>:4409/go2rtc/api/frame.jpeg?src=k2plus` |
-| **K2 Camera MJPEG** (optional) | `mjpegstreamer` | `http://<printer-ip>:4409/go2rtc/api/stream.mjpeg?src=k2plus_mjpeg` | `http://<printer-ip>:4409/go2rtc/api/frame.jpeg?src=k2plus` |
+| **K2 Camera** | `webrtc-go2rtc` | `http://<printer-ip>:4408/go2rtc/` | `http://<printer-ip>:4408/go2rtc/api/frame.jpeg?src=k2plus` |
+| **K2 Camera MJPEG** (live, ffmpeg 5) | `mjpegstreamer` | `http://<printer-ip>:4408/go2rtc/api/stream.mjpeg?src=k2plus_mjpeg` | `http://<printer-ip>:4408/go2rtc/api/frame.jpeg?src=k2plus` |
+| **K2 Camera MJPEG** (snapshot mode) | `mjpegstreamer-adaptive` | `http://<printer-ip>:4408/go2rtc/api/frame.jpeg?src=k2plus` | same |
+
+!!! tip "Camera installed with an older helper version?"
+    Older versions registered the webcams on port 4409, so the camera stayed black when Mainsail was not installed. Update the helper script and run Camera Support again.
 
 ### The optional MJPEG stream
 
-`k2plus_mjpeg` is an extra go2rtc stream that transcodes the WebRTC/H.264 video to MJPEG with ffmpeg:
+In live mode, `k2plus_mjpeg` is an extra go2rtc stream that transcodes the WebRTC/H.264 video (1280×720, 15 fps from the camera) to MJPEG with ffmpeg 5:
 
 ```yaml
   k2plus_mjpeg:
-    - "ffmpeg:k2plus#video=mjpeg#width=1280#raw=-r 10"
+    - "ffmpeg:k2plus#video=mjpeg#raw=-r 10"
+
+ffmpeg:
+  bin: /opt/bin/ffmpeg
 ```
 
-- 1280 pixels wide, 10 frames per second
+- 10 frames per second at the camera's resolution
 - ffmpeg only runs **while someone is watching** the MJPEG stream — it costs no CPU otherwise
-- If CPU load while printing is too high, lower `width` or the `-r` value in `/mnt/UDISK/helper-script/go2rtc.yaml` (re-running the installer overwrites the file)
+- If CPU load while printing is too high, lower the `-r` value or add `#width=640` in `/mnt/UDISK/helper-script/go2rtc.yaml` (re-running the installer overwrites the file)
 
 ---
 
@@ -117,9 +127,18 @@ http://<printer-ip>:1984/stream.html?src=k2plus&mode=webrtc
 MJPEG stream (if installed) and a single snapshot:
 
 ```
-http://<printer-ip>:4409/go2rtc/api/stream.mjpeg?src=k2plus_mjpeg
-http://<printer-ip>:4409/go2rtc/api/frame.jpeg?src=k2plus
+http://<printer-ip>:4408/go2rtc/api/stream.mjpeg?src=k2plus_mjpeg
+http://<printer-ip>:4408/go2rtc/api/frame.jpeg?src=k2plus
 ```
+
+## Troubleshooting
+
+| Symptom | Check |
+|---|---|
+| No picture at all | Run `curl -o /tmp/t.jpg "http://127.0.0.1:1984/api/frame.jpeg?src=k2plus"` on the printer. If that works, the camera chain is fine — check the webcam URLs (port 4408) in Fluidd → Settings → Cameras. |
+| Webcam URLs use `:4409` but Mainsail is not installed | Update the helper and run Camera Support again (or edit the URLs to `:4408`). |
+| MJPEG camera black, `/tmp/go2rtc.log` shows `ffmpeg: unsupported version` | ffmpeg 5 is needed — install Entware, run Camera Support again and accept the ffmpeg install. |
+| Camera missing right after boot | Normal for 60–90 s; check that go2rtc runs (`ps w`) and look at `/tmp/go2rtc.log`. |
 
 ---
 

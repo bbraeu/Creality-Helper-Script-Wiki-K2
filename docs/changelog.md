@@ -1,5 +1,16 @@
 # Changelog
 
+## Self-Update and Camera Fixes — October 16, 2026
+
+- **Helper script self-update** — the installed commit is stored in `.version`;
+  `helper.sh` checks GitHub on start and offers the update. Also Tools → 33 and
+  `helper.sh --update`. See [Update](helper-script/helper-script-installation.md#update).
+- **Camera black without Mainsail** — webcam URLs now use port 4408 (stock Fluidd)
+  instead of 4409. Live MJPEG needs ffmpeg 5 (Entware); otherwise the MJPEG camera
+  runs in snapshot mode. See [Camera Support](configurations/configure-camera.md#troubleshooting).
+
+---
+
 ## K2 (Base Model) Adaptation — October 16, 2026
 
 ### Wiki

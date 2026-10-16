@@ -1,6 +1,6 @@
 # Tools Menu
 
-The `[Tools] Menu` (options 24–32) collects maintenance and diagnostic helpers.
+The `[Tools] Menu` (options 24–33) collects maintenance and diagnostic helpers.
 
 | Option | Tool | What it does |
 |---|---|---|
@@ -13,6 +13,7 @@ The `[Tools] Menu` (options 24–32) collects maintenance and diagnostic helpers
 | 30 | Update Entware packages | `opkg update && opkg upgrade` (requires [Entware](../entware-k2.md)) |
 | 31 | Clear logs & cache | Frees space on `/mnt/UDISK` (see below) |
 | 32 | System information | Printer and system overview (see below) |
+| 33 | Update helper script | Installs the latest version from GitHub and restarts the helper — see [Update](../helper-script-installation.md#update) |
 
 ---
 

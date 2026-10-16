@@ -57,7 +57,7 @@ Generated macros only contain what your hardware has. On a K2 base model this me
 | 18 | Klipper Gcode Shell Command | [Klipper Gcode Shell Command](gcode-shell-command.md) |
 | 19 | Remove a feature (1–18, same order) | [Install Menu](install-menu/index.md#remove-menu) |
 | 20–23 | Backup / restore Klipper configuration and Moonraker database | [Backup & Restore Menu](backup-menu/index.md) |
-| 24–32 | Restarts, logs, installed features, Entware update, clear logs & cache, system information | [Tools Menu](tools-menu/index.md) |
+| 24–33 | Restarts, logs, installed features, Entware update, clear logs & cache, system information, update helper script | [Tools Menu](tools-menu/index.md) |
 
 ---
 

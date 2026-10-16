@@ -55,7 +55,7 @@ TIMELAPSE_RENDER
 Moonraker Timelapse uses the snapshot URL from the camera configuration to capture frames. With Camera Support installed, the snapshot URL is (the stream name `k2plus` is used on every K2 model):
 
 ```
-http://<printer-ip>:4409/go2rtc/api/frame.jpeg?src=k2plus
+http://<printer-ip>:4408/go2rtc/api/frame.jpeg?src=k2plus
 ```
 
 Ensure [Camera Support](../configurations/configure-camera.md) is installed before enabling timelapse.

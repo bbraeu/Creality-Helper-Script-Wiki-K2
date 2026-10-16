@@ -114,6 +114,7 @@ When you run the script you will see:
    30) Update Entware packages
    31) Clear logs & cache
    32) System information
+   33) Update helper script               [installed: f0577de]
 
     0) Exit
 
@@ -139,9 +140,20 @@ The menu is arranged in dependency order — install top to bottom:
 
 ## Update
 
-To update the helper script, run the same commands as for the installation. `cp -r` only overwrites the files that are in the download, so your installed-feature list (`.installed`), backups (`backups/`), the Git Backup token and the go2rtc binary/config in `/mnt/UDISK/helper-script/` are kept.
+The helper script updates itself. The commit it was installed from is stored in `/mnt/UDISK/helper-script/.version`. Every time `helper.sh` starts, it compares that commit with the latest one on GitHub, lists the new changes and asks **Update now? [Y/n]** — press Enter to update; the helper then restarts with the new files.
 
-After an update, reinstall a feature (select it again) to pick up changes to the files it generates.
+Other ways to update:
+
+- **Tools → 33) Update helper script** (shows the installed version)
+- Over SSH, without prompts:
+
+    ```sh
+    sh /mnt/UDISK/helper-script/helper.sh --update
+    ```
+
+Only the script files are replaced. Your installed-feature list (`.installed`), backups, the Git Backup token and the generated camera files (`go2rtc`, `go2rtc.yaml`, `camera_watchdog.py`) are kept. To skip the check (e.g. without internet), start with `HELPER_SKIP_UPDATE=1 sh /mnt/UDISK/helper-script/helper.sh`.
+
+After an update, reinstall a feature (select it again) to pick up changes to the files it generates (macros, camera setup).
 
 ---
 
