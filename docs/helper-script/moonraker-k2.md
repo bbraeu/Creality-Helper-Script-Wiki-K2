@@ -77,7 +77,7 @@ Every start of the helper script (and every boot) additionally makes sure the st
 
 Other features add their sections to this file: Moonraker Timelapse (`[timelapse]`) and KAMP-K2 (`[file_manager] enable_object_processing: True`).
 
-To remove it, use the Remove menu (option 19 → 1): the stock startup is restored and `moonraker.conf` is archived as `moonraker.conf.removed.<date>`.
+To remove it, use the Remove menu (option 20 → 1): the stock startup is restored and `moonraker.conf` is archived as `moonraker.conf.removed.<date>`.
 
 ---
 
@@ -99,7 +99,7 @@ The K2 uses OpenWrt rc.d init scripts. There is **no `supervisorctl`** command (
 /etc/init.d/S54klipper_mcu restart
 ```
 
-The helper script's Tools menu has shortcuts: options 24 (Klipper), 25 (Moonraker) and 26 (Nginx).
+The helper script's Tools menu has shortcuts: options 25 (Klipper), 26 (Moonraker) and 27 (Nginx).
 
 ---
 
@@ -136,12 +136,12 @@ What the installer does:
 | Database | Your existing database (history, Fluidd settings, webcams, …) is **migrated** to Moonraker's new sqlite format. The old database stays untouched. |
 | Config | Generates `printer_data/config/moonraker_upstream.conf` (server, authorization, `update_manager` entries for Fluidd / Mainsail / Mobileraker) which **includes your `moonraker.conf`** at the end. Put your own settings into `moonraker.conf`. |
 | Service | Replaces `/etc/init.d/moonraker` (Creality's original is saved in `/mnt/UDISK/helper-script/backups/`). Small `supervisorctl` / `sudo` shims let Moonraker restart Klipper, Moonraker and Mobileraker and use the Reboot / Shutdown buttons. |
-| Helper script | `/mnt/UDISK/helper-script` is turned into a git checkout of the helper repository (your generated files stay, they are git-ignored) and listed in *Software Updates*. The helper's own update check uses git then as well. |
+| Helper script | `/mnt/UDISK/helper-script` is turned into a git checkout of the helper repository (your generated files stay, they are git-ignored) and listed in *Software Updates* with `channel: stable` — it updates to **releases** (`vX.Y.Z`), like the helper's own update check. |
 | Safety | If the new Moonraker does not answer within 3 minutes, the installer **switches back to Creality's Moonraker** automatically. |
 
 After a **firmware update** (which restores Creality's service file) the helper re-applies the upstream service at the next boot.
 
-**Switch back:** Remove menu (option 19) → **1**. Creality's Moonraker starts again with its database from before the switch; optionally the 400 MB in `/mnt/UDISK/moonraker*` are deleted.
+**Switch back:** Remove menu (option 20) → **1**. Creality's Moonraker starts again with its database from before the switch; optionally the 400 MB in `/mnt/UDISK/moonraker*` are deleted.
 
 ### Prebuilt packages and weekly check
 

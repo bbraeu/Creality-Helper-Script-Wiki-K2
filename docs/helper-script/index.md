@@ -55,9 +55,10 @@ Generated macros only contain what your hardware has. On a K2 base model this me
 | 16 | OctoApp Companion | [OctoApp Companion](octoapp-companion.md) |
 | 17 | Git Backup | [Git Backup](git-backup.md) |
 | 18 | Klipper Gcode Shell Command | [Klipper Gcode Shell Command](gcode-shell-command.md) |
-| 19 | Remove a feature (1–18, same order) | [Install Menu](install-menu/index.md#remove-menu) |
-| 20–23 | Backup / restore Klipper configuration and Moonraker database | [Backup & Restore Menu](backup-menu/index.md) |
-| 24–33 | Restarts, logs, installed features, Entware update, clear logs & cache, system information, update helper script | [Tools Menu](tools-menu/index.md) |
+| 19 | Auto Power Off (smart plug after the print) | [Auto Power Off](https://github.com/bbraeu/Creality-Helper-Script-K2-Base#auto-power-off) |
+| 20 | Remove a feature (1–19, same order) | [Install Menu](install-menu/index.md#remove-menu) |
+| 21–24 | Backup / restore Klipper configuration and Moonraker database | [Backup & Restore Menu](backup-menu/index.md) |
+| 25–34 | Restarts, logs, installed features, Entware update, clear logs & cache, system information, update helper script | [Tools Menu](tools-menu/index.md) |
 
 ---
 

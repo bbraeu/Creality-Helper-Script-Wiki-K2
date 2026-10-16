@@ -130,4 +130,4 @@ See the [Mobileraker Companion documentation](https://github.com/Clon1998/mobile
 
 ## Removing
 
-Remove menu (option 19) → **15) Mobileraker Companion**. This stops and removes the service, removes a leftover `[update_manager mobileraker]` from older helper versions, deletes the code, the virtualenv and `mobileraker.conf`, and restarts Moonraker.
+Remove menu (option 20) → **15) Mobileraker Companion**. This stops and removes the service, removes a leftover `[update_manager mobileraker]` from older helper versions, deletes the code, the virtualenv and `mobileraker.conf`, and restarts Moonraker.

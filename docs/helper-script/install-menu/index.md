@@ -48,6 +48,7 @@ Make sure you have followed the [Install Helper Script](../helper-script-install
 | 16 | [OctoApp Companion](../octoapp-companion.md) | Requires Entware |
 | 17 | [Git Backup](../git-backup.md) | Requires Entware; install option 18 first for macros |
 | 18 | [Klipper Gcode Shell Command](../gcode-shell-command.md) | `RUN_SHELL_COMMAND` for your own macros |
+| 19 | [Auto Power Off](https://github.com/bbraeu/Creality-Helper-Script-K2-Base#auto-power-off) | Switches the printer off with a smart plug once the print has cooled down |
 
 Not in the menu, but documented here:
 
@@ -58,7 +59,7 @@ Not in the menu, but documented here:
 
 ## Remove Menu
 
-Option **19 — Remove a feature** opens the `[Remove] Menu`. It lists the same features as options 1–18, in the same order:
+Option **20 — Remove a feature** opens the `[Remove] Menu`. It lists the same features as options 1–19, in the same order:
 
 | Option | Removes |
 |---|---|

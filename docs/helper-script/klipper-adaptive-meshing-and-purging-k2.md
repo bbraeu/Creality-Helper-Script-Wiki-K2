@@ -99,7 +99,7 @@ The helper script changes a stock `mesh_min: 5,5` to `20,20` (probing too close 
 
 ## Removing
 
-Remove menu (option 19) → **6) KAMP-K2**. This removes `[restore_bed_mesh]` and the KAMP include from `printer.cfg`, **restores `gcode_macro.cfg` from `gcode_macro.cfg.pre_kamp`**, deletes `restore_bed_mesh.py` from Klipper's extras and the `KAMP/` folder, and restarts Klipper. Remember to remove `LINE_PURGE` from your slicer start G-code afterwards.
+Remove menu (option 20) → **6) KAMP-K2**. This removes `[restore_bed_mesh]` and the KAMP include from `printer.cfg`, **restores `gcode_macro.cfg` from `gcode_macro.cfg.pre_kamp`**, deletes `restore_bed_mesh.py` from Klipper's extras and the `KAMP/` folder, and restarts Klipper. Remember to remove `LINE_PURGE` from your slicer start G-code afterwards.
 
 !!! note "Duplicate G92"
     `Line_Purge.cfg` defines a `[gcode_macro G92]`. If another config file also defines one, the installer warns you — remove the other one if Klipper reports a duplicate `rename_existing`.

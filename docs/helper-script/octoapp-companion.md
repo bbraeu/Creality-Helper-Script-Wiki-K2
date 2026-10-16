@@ -29,4 +29,4 @@ At the end, the installer prints a link — follow it to connect the companion w
 
 ## Removing
 
-Remove menu (option 19) → **16) OctoApp Companion**. The helper runs the upstream `uninstall.sh` and deletes `/mnt/UDISK/octoapp`.
+Remove menu (option 20) → **16) OctoApp Companion**. The helper runs the upstream `uninstall.sh` and deletes `/mnt/UDISK/octoapp`.

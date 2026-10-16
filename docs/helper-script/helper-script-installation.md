@@ -21,7 +21,7 @@ The Creality K2 Helper Script is a native shell-based tool for the K2 and K2 Com
 | Adds Klipper features | Writes `.cfg` files to `/mnt/UDISK/printer_data/config/` and adds `[include]` lines to `printer.cfg` |
 | Adds services | OpenWrt procd services in `/etc/init.d/` (Mobileraker Companion, Git Backup) and an rc.d script for the camera bridge |
 | Service restarts | Uses `/etc/rc.d/S55klipper`, Moonraker's init script and `/etc/rc.d/S80nginx` — **not** `supervisorctl` (which does not exist on the K2) |
-| Uninstall | Every feature can be removed from the Remove menu (option 19) |
+| Uninstall | Every feature can be removed from the Remove menu (option 20) |
 | Stock files | Some stock files **are** patched: macro names in `gcode_macro.cfg` / `box.cfg` (see below), `mesh_min` in `printer.cfg`, `nginx.conf` and Fluidd/Mainsail `index.html` (Camera Support), `gcode_macro.cfg` (KAMP-K2, backed up as `gcode_macro.cfg.pre_kamp`), and Klipper's `extras` folder (KAMP-K2, Gcode Shell Command). |
 
 ### What runs every time the script starts
@@ -95,26 +95,29 @@ When you run the script you will see:
    17) Git Backup
    18) Klipper Gcode Shell Command
 
+  --- Step 6: Power ---
+   19) Auto Power Off (smart plug: Tapo, Tasmota, Shelly, ...)
+
   [Remove] Menu
-   19) Remove a feature
+   20) Remove a feature
 
   [Backup & Restore] Menu
-   20) Backup Klipper configuration
-   21) Restore Klipper configuration
-   22) Backup Moonraker database
-   23) Restore Moonraker database
+   21) Backup Klipper configuration
+   22) Restore Klipper configuration
+   23) Backup Moonraker database
+   24) Restore Moonraker database
 
   [Tools] Menu
-   24) Restart Klipper
-   25) Restart Moonraker
-   26) Restart Nginx
-   27) View Klipper log
-   28) View Moonraker log
-   29) Show installed features
-   30) Update Entware packages
-   31) Clear logs & cache
-   32) System information
-   33) Update helper script               [installed: f0577de]
+   25) Restart Klipper
+   26) Restart Moonraker
+   27) Restart Nginx
+   28) View Klipper log
+   29) View Moonraker log
+   30) Show installed features
+   31) Update Entware packages
+   32) Clear logs & cache
+   33) System information
+   34) Update helper script               [installed: v2.0.0]
 
     0) Exit
 
@@ -140,11 +143,11 @@ The menu is arranged in dependency order — install top to bottom:
 
 ## Update
 
-The helper script updates itself. The commit it was installed from is stored in `/mnt/UDISK/helper-script/.version`. Every time `helper.sh` starts, it compares that commit with the latest one on GitHub, lists the new changes and asks **Update now? [Y/n]** — press Enter to update; the helper then restarts with the new files.
+The helper script updates itself from **GitHub releases** (`vMAJOR.MINOR.PATCH`, e.g. [v2.0.0](https://github.com/bbraeu/Creality-Helper-Script-K2-Base/releases/tag/v2.0.0)) — not from every commit. The installed release is stored in `/mnt/UDISK/helper-script/.version`. Every time `helper.sh` starts, it compares it with the newest release (drafts and pre-releases are ignored), shows that release's notes and asks **Update now? [Y/n]** — press Enter to update; the helper then restarts with the new files. It never downgrades.
 
 Other ways to update:
 
-- **Tools → 33) Update helper script** (shows the installed version)
+- **Tools → 34) Update helper script** (shows the installed release)
 - With the [Updatable Moonraker](moonraker-k2.md#updatable-moonraker-upstream): **Fluidd / Mainsail → Settings → Software Updates → helper-script**. The helper directory is a git checkout then, and the helper's own update check uses git too.
 - Over SSH, without prompts:
 
@@ -160,7 +163,7 @@ After an update, reinstall a feature (select it again) to pick up changes to the
 
 ## Uninstall Everything
 
-1. Run the script and use the **Remove menu** (option 19) to remove each installed feature (Moonraker Extensions last — removing it restores the stock Moonraker startup).
+1. Run the script and use the **Remove menu** (option 20) to remove each installed feature (Moonraker Extensions last — removing it restores the stock Moonraker startup).
 2. Remove the helper script directory:
 
     ```bash
@@ -198,7 +201,7 @@ After an update, reinstall a feature (select it again) to pick up changes to the
 
 **Klipper fails to start after installing a feature**
 
-Check the log (or use option 27):
+Check the log (or use option 28):
 ```bash
 tail -50 /mnt/UDISK/printer_data/logs/klippy.log
 ```
@@ -206,7 +209,7 @@ Most errors are caused by a problem in a new `.cfg` file. The log shows the exac
 
 **Moonraker fails to start after installing extensions**
 
-Check the log (or use option 28):
+Check the log (or use option 29):
 ```bash
 tail -50 /mnt/UDISK/printer_data/logs/moonraker.log
 ```

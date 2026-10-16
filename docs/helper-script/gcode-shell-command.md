@@ -45,4 +45,4 @@ After a Klipper restart, run `HELLO` in the console.
 
 ## Removing
 
-Remove menu (option 19) → **18) Klipper Gcode Shell Command**. The helper refuses while any config file in the config folder still contains a `[gcode_shell_command ...]` section (Klipper would fail to start) and lists those files — remove those features (e.g. Git Backup) first. Only the helper's own copy of `gcode_shell_command.py` is deleted, never a file shipped with the firmware.
+Remove menu (option 20) → **18) Klipper Gcode Shell Command**. The helper refuses while any config file in the config folder still contains a `[gcode_shell_command ...]` section (Klipper would fail to start) and lists those files — remove those features (e.g. Git Backup) first. Only the helper's own copy of `gcode_shell_command.py` is deleted, never a file shipped with the firmware.

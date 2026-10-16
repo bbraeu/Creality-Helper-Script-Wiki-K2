@@ -1,5 +1,15 @@
 # Changelog
 
+## Helper Script v2.0.0 — October 16, 2026
+
+- The helper now updates from **GitHub releases** instead of every commit —
+  see [Install Helper Script → Update](helper-script/helper-script-installation.md#update)
+  and the [v2.0.0 release](https://github.com/bbraeu/Creality-Helper-Script-K2-Base/releases/tag/v2.0.0).
+- Menu numbers updated for **19) Auto Power Off**: Remove menu is now 20,
+  Backup & Restore 21–24, Tools 25–34 (34 = update helper script).
+
+---
+
 ## Updatable Moonraker — October 16, 2026
 
 - **[Updatable Moonraker](helper-script/moonraker-k2.md#updatable-moonraker-upstream)**

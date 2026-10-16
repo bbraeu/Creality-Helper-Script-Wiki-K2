@@ -6,7 +6,7 @@ Moonraker keeps its state in a database under `/mnt/UDISK/printer_data/database/
 
 ## Backup from Helper Script
 
-From the helper script menu, select **option 22 — Backup Moonraker database**.
+From the helper script menu, select **option 23 — Backup Moonraker database**.
 
 The script archives `/mnt/UDISK/printer_data/database/` to:
 
@@ -20,7 +20,7 @@ The last 5 database backups are kept automatically (independently of the Klipper
 
 ## Restore from Helper Script
 
-From the helper script menu, select **option 23 — Restore Moonraker database**.
+From the helper script menu, select **option 24 — Restore Moonraker database**.
 
 1. The script lists the available database backups with dates and sizes.
 2. Select one and confirm.

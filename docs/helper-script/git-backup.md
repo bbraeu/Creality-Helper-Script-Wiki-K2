@@ -79,4 +79,4 @@ Only available when [Klipper Gcode Shell Command](gcode-shell-command.md) was in
 
 ## Removing
 
-Remove menu (option 19) → **17) Git Backup**. This stops and removes the service, removes `git_backup.cfg` and its include, deletes the stored token, and asks whether to also delete the local git history (`config/.git` and `.gitignore`). **Your GitHub repository is not touched.**
+Remove menu (option 20) → **17) Git Backup**. This stops and removes the service, removes `git_backup.cfg` and its include, deletes the stored token, and asks whether to also delete the local git history (`config/.git` and `.gitignore`). **Your GitHub repository is not touched.**

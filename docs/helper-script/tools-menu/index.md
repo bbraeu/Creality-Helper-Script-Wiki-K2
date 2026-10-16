@@ -1,23 +1,23 @@
 # Tools Menu
 
-The `[Tools] Menu` (options 24–33) collects maintenance and diagnostic helpers.
+The `[Tools] Menu` (options 25–34) collects maintenance and diagnostic helpers.
 
 | Option | Tool | What it does |
 |---|---|---|
-| 24 | Restart Klipper | `/etc/rc.d/S55klipper restart`, then checks that `klippy.py` is running |
-| 25 | Restart Moonraker | Stops all running Moonraker instances and starts Moonraker again |
-| 26 | Restart Nginx | `/etc/rc.d/S80nginx restart` |
-| 27 | View Klipper log | Last 50 lines of `/mnt/UDISK/printer_data/logs/klippy.log` |
-| 28 | View Moonraker log | Last 50 lines of `/mnt/UDISK/printer_data/logs/moonraker.log` |
-| 29 | Show installed features | Lists the features recorded in `/mnt/UDISK/helper-script/.installed` |
-| 30 | Update Entware packages | `opkg update && opkg upgrade` (requires [Entware](../entware-k2.md)) |
-| 31 | Clear logs & cache | Frees space on `/mnt/UDISK` (see below) |
-| 32 | System information | Printer and system overview (see below) |
-| 33 | Update helper script | Installs the latest version from GitHub and restarts the helper — see [Update](../helper-script-installation.md#update) |
+| 25 | Restart Klipper | `/etc/rc.d/S55klipper restart`, then checks that `klippy.py` is running |
+| 26 | Restart Moonraker | Stops all running Moonraker instances and starts Moonraker again |
+| 27 | Restart Nginx | `/etc/rc.d/S80nginx restart` |
+| 28 | View Klipper log | Last 50 lines of `/mnt/UDISK/printer_data/logs/klippy.log` |
+| 29 | View Moonraker log | Last 50 lines of `/mnt/UDISK/printer_data/logs/moonraker.log` |
+| 30 | Show installed features | Lists the features recorded in `/mnt/UDISK/helper-script/.installed` |
+| 31 | Update Entware packages | `opkg update && opkg upgrade` (requires [Entware](../entware-k2.md)) |
+| 32 | Clear logs & cache | Frees space on `/mnt/UDISK` (see below) |
+| 33 | System information | Printer and system overview (see below) |
+| 34 | Update helper script | Installs the newest **release** from GitHub and restarts the helper — see [Update](../helper-script-installation.md#update) |
 
 ---
 
-## Clear Logs & Cache (option 31)
+## Clear Logs & Cache (option 32)
 
 After a confirmation, the script:
 
@@ -34,7 +34,7 @@ It then reports how many MB were freed on `/mnt/UDISK`.
 
 ---
 
-## System Information (option 32)
+## System Information (option 33)
 
 Shows:
 

@@ -42,4 +42,4 @@ At the end, the installer prints a link. **Open that link** in your browser and 
 
 ## Removing
 
-Remove menu (option 19) → **14) OctoEverywhere**. The helper runs the upstream `uninstall.sh` and deletes `/mnt/UDISK/octoeverywhere`.
+Remove menu (option 20) → **14) OctoEverywhere**. The helper runs the upstream `uninstall.sh` and deletes `/mnt/UDISK/octoeverywhere`.
