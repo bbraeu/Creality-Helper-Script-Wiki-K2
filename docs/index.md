@@ -73,12 +73,8 @@ Helper Script repository: [github.com/bbraeu/Creality-Helper-Script-K2-Base](htt
 
 ---
 
-## Support the Original Authors
+## Support This Project
 
-This fork builds on the work of sw3defy (K2 Plus wiki and helper script) and Guilouz (original K1 helper script and wiki). If you find it useful, consider supporting them:
+If this K2 helper script and wiki saved you some time, you can buy me a coffee:
 
-<a href="https://buymeacoffee.com/sw3defy"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" height="40"></a>
-
-<a href="https://ko-fi.com/sw3defy"><img src="https://ko-fi.com/img/githubbutton_sm.svg" height="40"></a>
-
-[Support Guilouz on Ko-fi](https://ko-fi.com/guilouz)
+<a href="https://buymeacoffee.com/braeubernhk"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" height="40"></a>

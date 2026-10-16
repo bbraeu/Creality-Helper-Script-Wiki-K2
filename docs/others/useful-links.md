@@ -9,6 +9,7 @@
 | This Wiki | [bbraeu.github.io/Creality-Helper-Script-Wiki-K2-Base](https://bbraeu.github.io/Creality-Helper-Script-Wiki-K2-Base/) |
 | Helper Script (K2) | [github.com/bbraeu/Creality-Helper-Script-K2-Base](https://github.com/bbraeu/Creality-Helper-Script-K2-Base) |
 | Wiki Repository | [github.com/bbraeu/Creality-Helper-Script-Wiki-K2-Base](https://github.com/bbraeu/Creality-Helper-Script-Wiki-K2-Base) |
+| Support This Project | [buymeacoffee.com/braeubernhk](https://buymeacoffee.com/braeubernhk) |
 
 ---
 
@@ -27,7 +28,6 @@
 |---|---|
 | Guilouz Helper Script Wiki | [guilouz.github.io/Creality-Helper-Script-Wiki](https://guilouz.github.io/Creality-Helper-Script-Wiki/) |
 | Guilouz Helper Script | [github.com/Guilouz/Creality-Helper-Script](https://github.com/Guilouz/Creality-Helper-Script) |
-| Support Guilouz | [ko-fi.com/guilouz](https://ko-fi.com/guilouz) |
 
 ---
 

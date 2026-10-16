@@ -48,6 +48,12 @@ unverified hardware details say so.
 
 [Join the discussion](https://github.com/bbraeu/Creality-Helper-Script-Wiki-K2-Base/discussions)
 
+## Support
+
+If this project saved you some time, you can buy me a coffee:
+
+<a href="https://buymeacoffee.com/braeubernhk"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" height="40"></a>
+
 ## Credits
 
 - [sw3defy](https://github.com/sw3defy/Creality-Helper-Script-Wiki-K2-Plus) - K2 Plus Helper Script and Wiki this fork is based on

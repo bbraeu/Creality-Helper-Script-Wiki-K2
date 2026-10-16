@@ -142,10 +142,8 @@ This wiki is built with [Material for MkDocs](https://squidfunk.github.io/mkdocs
 
 ---
 
-## Support the Original Authors
+## Support This Project
 
-This fork builds on sw3defy's K2 Plus work. If you find it useful, consider supporting sw3defy:
+If this K2 helper script and wiki saved you some time, you can buy me a coffee:
 
-<a href="https://buymeacoffee.com/sw3defy"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" height="40"></a>
-
-<a href="https://ko-fi.com/sw3defy"><img src="https://ko-fi.com/img/githubbutton_sm.svg" height="40"></a>
+<a href="https://buymeacoffee.com/braeubernhk"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" height="40"></a>
