@@ -10,7 +10,7 @@ Make sure you have followed the [Install Helper Script](../helper-script-install
 
 | Option | Feature | Notes |
 |---|---|---|
-| 1 | [Moonraker Extensions & Update Manager](../moonraker-k2.md) | Install first. Persistent `moonraker.conf` in `/mnt/UDISK`. |
+| 1 | [Moonraker Extensions](../moonraker-k2.md) | Install first. Persistent `moonraker.conf` in `/mnt/UDISK`. |
 
 ## Step 2: Print Macros
 

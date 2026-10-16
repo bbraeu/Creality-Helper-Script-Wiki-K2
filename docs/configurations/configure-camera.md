@@ -98,6 +98,9 @@ The camera appears automatically in both Fluidd and Mainsail after boot:
 2. After ~60–90 seconds go2rtc connects to the K2 camera
 3. The camera feed shows in both Fluidd and Mainsail independently — opening one does not affect the other
 
+!!! note "Fluidd shows only K2 Camera"
+    Creality's Moonraker does not store the webcam *enabled* flag, so Fluidd treats every webcam as disabled. Camera Support adds a small script to Fluidd (`scripts/fluidd_camera.py`) that enables the WebRTC **K2 Camera**. The **K2 Camera MJPEG** stays off in Fluidd on purpose — it is meant for Mobileraker, and showing it in Fluidd would keep ffmpeg transcoding while the page is open. Updating Fluidd from the helper (option 8) re-applies the script.
+
 !!! note "First open after boot"
     The camera takes 60–90 seconds after boot to become available, since the startup service waits for the rest of the printer's services to come up first.
 
@@ -105,14 +108,9 @@ The camera appears automatically in both Fluidd and Mainsail after boot:
 
 ## Mobileraker
 
-- Add the printer in the Mobileraker app **by IP address**, not by hostname. The webcam URLs contain the IP, and Mobileraker only maps them through OctoEverywhere for remote viewing when the host matches the printer address it knows.
-- **K2 Camera** (go2rtc WebRTC) is shown by Mobileraker to **supporters (paid subscription) only**.
-- **K2 Camera MJPEG** works for **everyone**, and MJPEG is the only kind of webcam Mobileraker Companion can take **notification snapshots** from.
-- Remotely via OctoEverywhere, **WebRTC does not work, MJPEG does**.
-- Mobileraker's own `webrtc-creality` camera mode does not work on the K2 ([mobileraker#452](https://github.com/Clon1998/mobileraker/issues/452), open).
-- Webcams via Obico are not supported by Mobileraker.
+See the step-by-step guide: [Mobileraker Companion → Camera in Mobileraker](../helper-script/mobileraker-companion-k2.md#camera-in-mobileraker-step-by-step).
 
-See [Mobileraker Companion](../helper-script/mobileraker-companion-k2.md) for push notifications.
+In short: answer `y` to the MJPEG questions, add the printer in the app **by IP address**, and pick **K2 Camera MJPEG** (free) or **K2 Camera** (supporters). Remotely via OctoEverywhere only MJPEG works.
 
 ---
 
@@ -137,6 +135,7 @@ http://<printer-ip>:4408/go2rtc/api/frame.jpeg?src=k2plus
 |---|---|
 | No picture at all | Run `curl -o /tmp/t.jpg "http://127.0.0.1:1984/api/frame.jpeg?src=k2plus"` on the printer. If that works, the camera chain is fine — check the webcam URLs (port 4408) in Fluidd → Settings → Cameras. |
 | Webcam URLs use `:4409` but Mainsail is not installed | Update the helper and run Camera Support again (or edit the URLs to `:4408`). |
+| Fluidd camera card empty, or only *K2 Camera MJPEG (connecting)* | Older helper versions only enabled the first webcam in Fluidd. Update the helper and run Camera Support again, or run `python3 /mnt/UDISK/helper-script/scripts/fluidd_camera.py install` and reload Fluidd. |
 | MJPEG camera black, `/tmp/go2rtc.log` shows `ffmpeg: unsupported version` | ffmpeg 5 is needed — install Entware, run Camera Support again and accept the ffmpeg install. |
 | Camera missing right after boot | Normal for 60–90 s; check that go2rtc runs (`ps w`) and look at `/tmp/go2rtc.log`. |
 

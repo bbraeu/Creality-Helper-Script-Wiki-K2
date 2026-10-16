@@ -65,7 +65,7 @@ Because the stock config is read-only, the helper script adds a persistent inclu
 
 This file survives firmware updates because it lives on `/mnt/UDISK/`.
 
-Make sure you have followed the [Install Helper Script](helper-script-installation.md) section, then from the script's `[Install] Menu` select **option 1 — Moonraker Extensions & Update Manager**.
+Make sure you have followed the [Install Helper Script](helper-script-installation.md) section, then from the script's `[Install] Menu` select **option 1 — Moonraker Extensions**.
 
 The script will:
 
@@ -75,7 +75,7 @@ The script will:
 
 Every start of the helper script (and every boot) additionally makes sure the stock `/usr/share/moonraker/moonraker.conf` includes the UDISK file and sets `queue_gcode_uploads: True` — otherwise `[timelapse]` and `[update_manager]` sections in the UDISK file were silently ignored, and the web UIs flooded Moonraker with "Metadata not available" requests.
 
-Other features add their sections to this file: Moonraker Timelapse (`[timelapse]`), KAMP-K2 (`[file_manager] enable_object_processing: True`) and Mobileraker Companion (`[update_manager mobileraker]`).
+Other features add their sections to this file: Moonraker Timelapse (`[timelapse]`) and KAMP-K2 (`[file_manager] enable_object_processing: True`).
 
 To remove it, use the Remove menu (option 19 → 1): the stock startup is restored and `moonraker.conf` is archived as `moonraker.conf.removed.<date>`.
 
@@ -115,8 +115,24 @@ Mainsail is not pre-installed. To add it on port `4409`, see [Mainsail](mainsail
 
 ---
 
-## Update Manager
+## Update Manager (not supported on the K2)
 
-The **Software Updates** panel in Fluidd / Mainsail lists every component that has an `[update_manager ...]` section in a loaded Moonraker config. The helper script adds one for **Mobileraker Companion**; HelixScreen's own update entry is removed because it is not supported on the K2. The helper script itself is updated by re-running the installation commands — see [Install Helper Script → Update](helper-script-installation.md#update).
+Moonraker's update manager **cannot run on the K2's stock Moonraker**. Creality installs Moonraker as a plain copy in `/usr/share/moonraker` — no git checkout and no `scripts/` folder. When the `update_manager` component loads, it always creates an updater for Moonraker itself, which fails with:
 
-Updates performed via the Update Manager do **not** affect the firmware itself or the read-only `/usr/share/` partitions.
+```
+ConfigError: Invalid path for option `requirements` in section [moonraker]:
+Path `/usr/share/scripts/moonraker-requirements.txt` does not exist
+```
+
+The whole component is then dropped, and every `[update_manager ...]` section shows up in Fluidd / Mainsail as:
+
+> Moonraker has failed plugins … update_manager
+> Unparsed config section [update_manager …] detected.
+
+The built-in Moonraker updater cannot be switched off by configuration, and faking the missing files would offer a "Moonraker update" that overwrites Creality's install — so the helper does not use the update manager at all:
+
+- The **helper script** updates itself — see [Install Helper Script → Update](helper-script-installation.md#update).
+- **Features** (Mobileraker Companion, HelixScreen, Fluidd, Mainsail, …) are updated by selecting them again in the Install menu.
+- Older helper versions added `[update_manager mobileraker]`; it is removed automatically at the next helper start or reboot, which clears the warning.
+
+If the warning remains, another `[update_manager ...]` section is configured (the helper prints a hint). Remove it from `/mnt/UDISK/printer_data/config/moonraker.conf` and restart Moonraker.

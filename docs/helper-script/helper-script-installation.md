@@ -68,7 +68,7 @@ When you run the script you will see:
 
   [Install] Menu
   --- Step 1: Foundation (install first) ---
-    1) Moonraker Extensions & Update Manager  [recommended first]
+    1) Moonraker Extensions                  [recommended first]
 
   --- Step 2: Print macros ---
     2) Fans Control Macros

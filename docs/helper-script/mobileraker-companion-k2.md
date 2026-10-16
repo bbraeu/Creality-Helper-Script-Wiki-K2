@@ -21,7 +21,7 @@ The script:
 | Config | Creates `/mnt/UDISK/printer_data/config/mobileraker.conf` if it does not exist. The timezone comes from the printer (`uci`) or is asked for. |
 | Service | procd service `/etc/init.d/mobileraker` (starts on boot, restarted if it exits) |
 | Log | `/mnt/UDISK/printer_data/logs/mobileraker.log` |
-| Updates | Adds `[update_manager mobileraker]` to the UDISK `moonraker.conf`, so Fluidd / Mainsail can update the companion |
+| Updates | Select option 15 again — Moonraker's update manager is [not supported on the K2](moonraker-k2.md#update-manager-not-supported-on-the-k2) |
 
 Selecting option 15 again offers to update / repair the installation. An existing `mobileraker.conf` is kept.
 
@@ -33,17 +33,55 @@ Open the Mobileraker app and add the printer **by IP address**, not by hostname.
 
 ---
 
-## Camera in Mobileraker
+## Camera in Mobileraker — Step by Step
 
-Install [Camera Support](../configurations/configure-camera.md) (option 11) and answer **`y`** to *Add MJPEG camera?*:
+Mobileraker reads the webcams from Moonraker, so there is nothing to type in the app — the work is on the printer side.
+
+**1. Install Entware** (option 13), if not done yet. It provides ffmpeg 5, which the live MJPEG camera needs.
+
+**2. Install Camera Support** (option 11) and answer:
+
+| Question | Answer |
+|---|---|
+| *Continue?* | `y` |
+| *Add MJPEG camera?* | **`y`** — this is the camera the free Mobileraker version can show |
+| *Install ffmpeg 5 from Entware?* | **`y`** — live MJPEG (about 10 fps). With `n` the MJPEG camera runs in snapshot mode (about 1 fps). |
+| *Reboot now?* | `y` |
+
+The camera needs 60–90 seconds after the reboot.
+
+**3. Test it on your phone.** Open this in the phone's browser (same Wi-Fi as the printer) — you should see live video:
+
+```
+http://<printer-ip>:4408/go2rtc/api/stream.mjpeg?src=k2plus_mjpeg
+```
+
+If this stays black or fails, see [Camera Support → Troubleshooting](../configurations/configure-camera.md#troubleshooting) before going on.
+
+**4. Add the printer in the Mobileraker app by IP address** (e.g. `192.168.1.202`), not by hostname. Mobileraker talks to Moonraker on port 7125; if the app cannot find the printer, enter `192.168.1.202:7125`. The IP matters for remote viewing: Mobileraker only maps the webcam URLs through OctoEverywhere when their host matches the printer address it knows.
+
+**5. Pick the webcam.** The dashboard's webcam card lists the webcams registered in Moonraker:
 
 | Webcam | Service | Who can use it |
 |---|---|---|
-| **K2 Camera** | `webrtc-go2rtc` | Mobileraker **supporters** (paid) only; does not work remotely via OctoEverywhere |
-| **K2 Camera MJPEG** | `mjpegstreamer` | **Everyone**; works remotely via OctoEverywhere |
+| **K2 Camera MJPEG** | `mjpegstreamer` (`mjpegstreamer-adaptive` in snapshot mode) | **Everyone**; also works remotely via OctoEverywhere |
+| **K2 Camera** | `webrtc-go2rtc` | Mobileraker **supporters** (paid) only; best quality, least printer CPU; local network only |
 
-- Notification **snapshots** can only come from an MJPEG webcam. Choosing the snapshot webcam in the app is a supporter feature; otherwise the companion uses `snapshot_uri` from `mobileraker.conf`, which the helper sets to the go2rtc snapshot (`http://127.0.0.1:1984/api/frame.jpeg?src=k2plus`).
-- Mobileraker's own `webrtc-creality` camera mode does not work on the K2 ([mobileraker#452](https://github.com/Clon1998/mobileraker/issues/452), open).
+Select **K2 Camera MJPEG** (or **K2 Camera** if you are a supporter).
+
+**6. Pictures in notifications** — install Mobileraker Companion (option 15, this page). Notification snapshots can only come from an MJPEG webcam:
+
+- **Without supporter subscription:** nothing to do — the companion uses `snapshot_uri` from `mobileraker.conf`, which the helper already points at the go2rtc snapshot.
+- **Supporters:** in the app's printer settings, choose **K2 Camera MJPEG** as the snapshot webcam.
+
+**7. Remote viewing (optional)** — install [OctoEverywhere](octoeverywhere.md) (option 14) and link it in Mobileraker. Remotely, **only the MJPEG camera works**; WebRTC needs the local network.
+
+!!! tip "CPU usage"
+    Live MJPEG is transcoded by ffmpeg **only while someone watches it** (about one third of the printer's CPU). Fluidd shows the WebRTC camera instead, so an open Fluidd tab costs nothing extra.
+
+Notes:
+
+- Mobileraker's own `webrtc-creality` camera mode does not work on the K2 ([mobileraker#452](https://github.com/Clon1998/mobileraker/issues/452), open) — use the webcams above.
 - Webcams via Obico are not supported by Mobileraker.
 
 ---
@@ -88,4 +126,4 @@ See the [Mobileraker Companion documentation](https://github.com/Clon1998/mobile
 
 ## Removing
 
-Remove menu (option 19) → **15) Mobileraker Companion**. This stops and removes the service, removes `[update_manager mobileraker]`, deletes the code, the virtualenv and `mobileraker.conf`, and restarts Moonraker.
+Remove menu (option 19) → **15) Mobileraker Companion**. This stops and removes the service, removes a leftover `[update_manager mobileraker]` from older helper versions, deletes the code, the virtualenv and `mobileraker.conf`, and restarts Moonraker.

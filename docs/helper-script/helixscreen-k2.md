@@ -15,7 +15,7 @@ HelixScreen is a modern, lightweight touchscreen interface for Klipper 3D printe
 - Bed mesh visualization
 - Input shaper graphs
 - Multi-material (CFS) management
-- Auto-updates via Fluidd/Mainsail update manager
+- Updates via the helper script (select option 12 again)
 
 ---
 
