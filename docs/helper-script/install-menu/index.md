@@ -10,7 +10,7 @@ Make sure you have followed the [Install Helper Script](../helper-script-install
 
 | Option | Feature | Notes |
 |---|---|---|
-| 1 | [Moonraker Extensions](../moonraker-k2.md) | Install first. Persistent `moonraker.conf` in `/mnt/UDISK`. |
+| 1 | [Moonraker](../moonraker-k2.md) — 1) Extensions for Creality's Moonraker, 2) [Updatable Moonraker](../moonraker-k2.md#updatable-moonraker-upstream) | Install first. Persistent `moonraker.conf` in `/mnt/UDISK`. |
 
 ## Step 2: Print Macros
 

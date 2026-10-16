@@ -21,7 +21,7 @@ The script:
 | Config | Creates `/mnt/UDISK/printer_data/config/mobileraker.conf` if it does not exist. The timezone comes from the printer (`uci`) or is asked for. |
 | Service | procd service `/etc/init.d/mobileraker` (starts on boot, restarted if it exits) |
 | Log | `/mnt/UDISK/printer_data/logs/mobileraker.log` |
-| Updates | Select option 15 again — Moonraker's update manager is [not supported on the K2](moonraker-k2.md#update-manager-not-supported-on-the-k2) |
+| Updates | Select option 15 again, or — with the [Updatable Moonraker](moonraker-k2.md#updatable-moonraker-upstream) — Fluidd → Settings → Software Updates |
 
 Selecting option 15 again offers to update / repair the installation. An existing `mobileraker.conf` is kept.
 
@@ -58,7 +58,11 @@ http://<printer-ip>:4408/go2rtc/api/stream.mjpeg?src=k2plus_mjpeg
 
 If this stays black or fails, see [Camera Support → Troubleshooting](../configurations/configure-camera.md#troubleshooting) before going on.
 
-**4. Add the printer in the Mobileraker app by IP address** (e.g. `192.168.1.202`), not by hostname. Mobileraker talks to Moonraker on port 7125; if the app cannot find the printer, enter `192.168.1.202:7125`. The IP matters for remote viewing: Mobileraker only maps the webcam URLs through OctoEverywhere when their host matches the printer address it knows.
+**4. Add the printer in the Mobileraker app as `<printer-ip>:4408`** (e.g. `192.168.1.202:4408`) — the IP address, not the hostname, and port **4408** (Fluidd's web server, which also forwards to Moonraker).
+
+- With `:4408`, the app's **default webcam values work as they are** — if you add a webcam yourself in the app, keep *MJPEG* with stream `/webcam/?action=stream` and snapshot `/webcam/?action=snapshot`; the helper maps these classic mjpg-streamer URLs to the K2 camera.
+- Plain `192.168.1.202` (Moonraker's port 7125) works too for the webcams the helper registered, but relative URLs like the app defaults then point to port 80, which is Creality's own web server.
+- The IP matters for remote viewing: Mobileraker only maps webcam URLs through OctoEverywhere when their host matches the printer address it knows.
 
 **5. Pick the webcam.** The dashboard's webcam card lists the webcams registered in Moonraker:
 

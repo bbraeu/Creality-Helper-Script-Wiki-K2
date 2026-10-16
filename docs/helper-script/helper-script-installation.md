@@ -68,7 +68,7 @@ When you run the script you will see:
 
   [Install] Menu
   --- Step 1: Foundation (install first) ---
-    1) Moonraker Extensions                  [recommended first]
+    1) Moonraker (extensions / updatable Moonraker) [first]
 
   --- Step 2: Print macros ---
     2) Fans Control Macros
@@ -145,6 +145,7 @@ The helper script updates itself. The commit it was installed from is stored in 
 Other ways to update:
 
 - **Tools → 33) Update helper script** (shows the installed version)
+- With the [Updatable Moonraker](moonraker-k2.md#updatable-moonraker-upstream): **Fluidd / Mainsail → Settings → Software Updates → helper-script**. The helper directory is a git checkout then, and the helper's own update check uses git too.
 - Over SSH, without prompts:
 
     ```sh

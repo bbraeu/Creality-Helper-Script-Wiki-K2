@@ -65,7 +65,7 @@ Because the stock config is read-only, the helper script adds a persistent inclu
 
 This file survives firmware updates because it lives on `/mnt/UDISK/`.
 
-Make sure you have followed the [Install Helper Script](helper-script-installation.md) section, then from the script's `[Install] Menu` select **option 1 — Moonraker Extensions**.
+Make sure you have followed the [Install Helper Script](helper-script-installation.md) section, then from the script's `[Install] Menu` select **option 1 → 1) Moonraker Extensions**. (Option 1 → 2 installs the [Updatable Moonraker](#updatable-moonraker-upstream) instead.)
 
 The script will:
 
@@ -105,7 +105,7 @@ The helper script's Tools menu has shortcuts: options 24 (Klipper), 25 (Moonrake
 
 ## Reboot / Shutdown Buttons
 
-The stock `[machine]` section uses `provider: none`, so the Reboot and Shutdown buttons in Fluidd/Mainsail may not work. The K2 helper script does not install a host-control shim (the K1 helper script's *Host Control Support* is not part of it). Use the touchscreen or SSH (`reboot`).
+With Creality's Moonraker (`provider: none`) the Reboot and Shutdown buttons and the service restart buttons in Fluidd/Mainsail do not work — use the touchscreen or SSH (`reboot`). The [Updatable Moonraker](#updatable-moonraker-upstream) installs small `supervisorctl` / `sudo` shims, so these buttons work there.
 
 ---
 
@@ -115,9 +115,52 @@ Mainsail is not pre-installed. To add it on port `4409`, see [Mainsail](mainsail
 
 ---
 
-## Update Manager (not supported on the K2)
+## Updatable Moonraker (upstream)
 
-Moonraker's update manager **cannot run on the K2's stock Moonraker**. Creality installs Moonraker as a plain copy in `/usr/share/moonraker` — no git checkout and no `scripts/` folder. When the `update_manager` component loads, it always creates an updater for Moonraker itself, which fails with:
+Option **1 → 2) Updatable Moonraker** replaces Creality's Moonraker with the current upstream [Moonraker](https://github.com/Arksine/moonraker). Then **Fluidd / Mainsail → Settings → Software Updates** works: Moonraker, Fluidd, Mainsail, Mobileraker Companion **and the helper script itself** can be updated from the web UI.
+
+Why a replacement is needed: Creality's Moonraker is an old, stripped build on Python 3.9 without git, so its update manager cannot run (see [below](#update-manager-with-creality-s-moonraker)). Current Moonraker needs Python 3.10 or newer, which [Entware](entware-k2.md) provides.
+
+!!! note "Requirements"
+    - [Entware](entware-k2.md) (option 13) and about **600 MB** free on `/mnt/UDISK`
+    - **A few minutes**: Moonraker's compiled Python packages are **prebuilt** (see below). Only if no matching prebuilt packages exist, they are compiled on the printer (15–30 minutes, with a temporary swap file). Do not power off.
+    - Not during a print — Moonraker is restarted at the end.
+
+What the installer does:
+
+| Step | Details |
+|---|---|
+| Build tools | Entware `python3`, `python3-dev`, `python3-pillow`, `python3-sqlite3`, `gcc`, `make`, `git` |
+| Code | `git clone` of Moonraker to `/mnt/UDISK/moonraker` |
+| Python | Virtualenv `/mnt/UDISK/moonraker-env` (Entware Python 3.11). Packages come from the newest `moonraker-wheels-*` release of the helper repository, unpacked to `/mnt/UDISK/moonraker-wheels` (also used by later Moonraker updates). |
+| Database | Your existing database (history, Fluidd settings, webcams, …) is **migrated** to Moonraker's new sqlite format. The old database stays untouched. |
+| Config | Generates `printer_data/config/moonraker_upstream.conf` (server, authorization, `update_manager` entries for Fluidd / Mainsail / Mobileraker) which **includes your `moonraker.conf`** at the end. Put your own settings into `moonraker.conf`. |
+| Service | Replaces `/etc/init.d/moonraker` (Creality's original is saved in `/mnt/UDISK/helper-script/backups/`). Small `supervisorctl` / `sudo` shims let Moonraker restart Klipper, Moonraker and Mobileraker and use the Reboot / Shutdown buttons. |
+| Helper script | `/mnt/UDISK/helper-script` is turned into a git checkout of the helper repository (your generated files stay, they are git-ignored) and listed in *Software Updates*. The helper's own update check uses git then as well. |
+| Safety | If the new Moonraker does not answer within 3 minutes, the installer **switches back to Creality's Moonraker** automatically. |
+
+After a **firmware update** (which restores Creality's service file) the helper re-applies the upstream service at the next boot.
+
+**Switch back:** Remove menu (option 19) → **1**. Creality's Moonraker starts again with its database from before the switch; optionally the 400 MB in `/mnt/UDISK/moonraker*` are deleted.
+
+### Prebuilt packages and weekly check
+
+The K2 has 488 MB RAM and no swap — compiling Moonraker's dependencies there gets killed by the out-of-memory killer. A GitHub workflow in the helper repository ([`moonraker-wheels.yml`](https://github.com/bbraeu/Creality-Helper-Script-K2-Base/blob/main/.github/workflows/moonraker-wheels.yml)) therefore builds them in an emulated ARMv7 container with the same Entware toolchain and publishes them as `moonraker-wheels-<hash>` releases. It runs **weekly** and:
+
+- checks that the newest Moonraker still runs on the K2's Python 3.11 (`requires-python`). If not, the run fails and opens an issue — **then don't update Moonraker from Software Updates** until that is resolved;
+- rebuilds the packages when Moonraker's requirements changed.
+
+Notes:
+
+- **Klipper is not updated** — Creality's Klipper is not a git install and must not be replaced (prtouch, CFS and motor control are Creality-specific). It shows up in *Software Updates* without an update.
+- Moonraker updates from the web UI use the prebuilt packages when available; otherwise pip compiles on the printer, which can take long or fail for lack of memory — wait for the weekly workflow to publish new packages first.
+- With the upstream Moonraker, webcams have a real *enabled* switch (Fluidd → Settings → Cameras). Both K2 cameras are enabled; select **K2 Camera** in Fluidd's camera card so the MJPEG stream is not transcoded while Fluidd is open.
+
+---
+
+## Update Manager with Creality's Moonraker
+
+Moonraker's update manager **cannot run on the K2's stock Moonraker** (use the [Updatable Moonraker](#updatable-moonraker-upstream) instead). Creality installs Moonraker as a plain copy in `/usr/share/moonraker` — no git checkout and no `scripts/` folder. When the `update_manager` component loads, it always creates an updater for Moonraker itself, which fails with:
 
 ```
 ConfigError: Invalid path for option `requirements` in section [moonraker]:

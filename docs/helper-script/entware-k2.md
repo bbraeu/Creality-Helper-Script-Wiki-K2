@@ -28,13 +28,17 @@ sh /mnt/UDISK/helper-script/helper.sh
 
 Select **13) Entware Package Manager**.
 
+!!! warning "Entware lives on /mnt/UDISK"
+    Entware is installed to `/mnt/UDISK/opt`; `/opt` is a symlink to it. Older helper versions installed it onto the **240 MB system partition**, which runs full with Python and ffmpeg (about 150 MB) — then nginx, Moonraker and opkg can no longer write their files, and opkg's package list gets cut off. At start the helper detects such an install and offers to **move it to `/mnt/UDISK`** (and repairs opkg's package list).
+
 The installer will:
 
-1. Create a Python-based dummy `wget` for bootstrapping
-2. Run the Entware installer
-3. Install the real `wget` via `opkg`
-4. Add `/opt/bin` and `/opt/sbin` to PATH permanently
-5. Configure Entware services to start on boot
+1. Point `/opt` at `/mnt/UDISK/opt`
+2. Create a Python-based dummy `wget` for bootstrapping
+3. Run the Entware installer
+4. Install the real `wget` via `opkg`
+5. Add `/opt/bin` and `/opt/sbin` to PATH permanently
+6. Configure Entware services to start on boot
 
 ---
 

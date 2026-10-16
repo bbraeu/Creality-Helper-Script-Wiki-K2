@@ -1,5 +1,20 @@
 # Changelog
 
+## Updatable Moonraker — October 16, 2026
+
+- **[Updatable Moonraker](helper-script/moonraker-k2.md#updatable-moonraker-upstream)**
+  (option 1 → 2): current upstream Moonraker instead of Creality's, so
+  *Software Updates* works for Moonraker, Fluidd, Mainsail, Mobileraker
+  Companion and the helper script itself. Prebuilt packages, weekly
+  compatibility check, automatic fallback, switch back via the Remove menu.
+- **[Entware](helper-script/entware-k2.md) moved to `/mnt/UDISK`** — it filled
+  the 240 MB system partition; existing installs are offered a move.
+- **[Default webcam URLs](configurations/configure-camera.md#default-webcam-urls-mobileraker-moonraker-other-apps)**
+  `/webcam/?action=stream|snapshot` work; Mobileraker guide: add the printer as
+  `<printer-ip>:4408`.
+
+---
+
 ## Fluidd Camera and update_manager Fix — October 16, 2026
 
 - **Camera not shown in Fluidd** — Creality's Moonraker has no webcam *enabled*

@@ -114,6 +114,19 @@ In short: answer `y` to the MJPEG questions, add the printer in the app **by IP 
 
 ---
 
+## Default Webcam URLs (Mobileraker, Moonraker, other apps)
+
+Many apps default to the URLs of the classic *mjpg-streamer*. The helper maps them to go2rtc on ports 4408 and 4409:
+
+| URL | Delivers |
+|---|---|
+| `http://<printer-ip>:4408/webcam/?action=stream` | MJPEG stream (`k2plus_mjpeg`; single snapshots in snapshot mode) |
+| `http://<printer-ip>:4408/webcam/?action=snapshot` | JPEG snapshot |
+
+In apps that resolve relative URLs against the printer address (Mobileraker), add the printer as `<printer-ip>:4408` so `/webcam/?action=stream` works unchanged.
+
+---
+
 ## Direct Camera Access
 
 Via go2rtc's own web interface:

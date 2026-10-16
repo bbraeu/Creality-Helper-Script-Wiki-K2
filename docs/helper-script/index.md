@@ -37,7 +37,7 @@ Generated macros only contain what your hardware has. On a K2 base model this me
 
 | Option | Feature | Page |
 |---|---|---|
-| 1 | Moonraker Extensions | [Moonraker Extensions](moonraker-k2.md) |
+| 1 | Moonraker (extensions / updatable Moonraker) | [Moonraker](moonraker-k2.md) |
 | 2 | Fans Control Macros | [Fans Control Macros](fans-control-macros-k2.md) |
 | 3 | Useful Macros (PID, leveling, warmup) | [Useful Macros](useful-macros-k2.md) |
 | 4 | Save Z-Offset Macros | [Save Z-Offset Macros](save-z-offset-macros-k2.md) |
