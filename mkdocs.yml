@@ -1,9 +1,9 @@
 site_name: Creality K2 — Helper Script Wiki
-site_description: Complete guide to rooting the Creality K2 and K2 Combo and adding features with the Creality K2 Helper Script.
-site_url: https://bbraeu.github.io/Creality-Helper-Script-Wiki-K2-Base/
+site_description: Complete guide to rooting the Creality K2 series (K2, K2 Combo, K2 Pro, K2 Plus) and adding features with the Creality K2 Helper Script.
+site_url: https://bbraeu.github.io/Creality-Helper-Script-Wiki-K2/
 
 repo_name: GitHub
-repo_url: https://github.com/bbraeu/Creality-Helper-Script-Wiki-K2-Base
+repo_url: https://github.com/bbraeu/Creality-Helper-Script-Wiki-K2
 
 theme:
   name: material
@@ -71,14 +71,14 @@ markdown_extensions:
 extra:
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/bbraeu/Creality-Helper-Script-Wiki-K2-Base
+      link: https://github.com/bbraeu/Creality-Helper-Script-Wiki-K2
 
 nav:
   - About:
       - About: index.md
       - Changelog: changelog.md
       - Helper Script Changelog: helper-script-changelog.md
-      - Discussions: https://github.com/bbraeu/Creality-Helper-Script-Wiki-K2-Base/discussions
+      - Discussions: https://github.com/bbraeu/Creality-Helper-Script-Wiki-K2/discussions
       - Special Thanks: special-thanks.md
       - Camera Support: configurations/configure-camera.md
 

@@ -6,9 +6,9 @@
 
 | Resource | Link |
 |---|---|
-| This Wiki | [bbraeu.github.io/Creality-Helper-Script-Wiki-K2-Base](https://bbraeu.github.io/Creality-Helper-Script-Wiki-K2-Base/) |
-| Helper Script (K2) | [github.com/bbraeu/Creality-Helper-Script-K2-Base](https://github.com/bbraeu/Creality-Helper-Script-K2-Base) |
-| Wiki Repository | [github.com/bbraeu/Creality-Helper-Script-Wiki-K2-Base](https://github.com/bbraeu/Creality-Helper-Script-Wiki-K2-Base) |
+| This Wiki | [bbraeu.github.io/Creality-Helper-Script-Wiki-K2](https://bbraeu.github.io/Creality-Helper-Script-Wiki-K2/) |
+| Helper Script (K2) | [github.com/bbraeu/Creality-Helper-Script-K2](https://github.com/bbraeu/Creality-Helper-Script-K2) |
+| Wiki Repository | [github.com/bbraeu/Creality-Helper-Script-Wiki-K2](https://github.com/bbraeu/Creality-Helper-Script-Wiki-K2) |
 | Support This Project | [buymeacoffee.com/braeubernhk](https://buymeacoffee.com/braeubernhk) |
 
 ---
@@ -83,7 +83,7 @@
 
 | Resource | Link |
 |---|---|
-| Wiki Discussions | [github.com/bbraeu/Creality-Helper-Script-Wiki-K2-Base/discussions](https://github.com/bbraeu/Creality-Helper-Script-Wiki-K2-Base/discussions) |
+| Wiki Discussions | [github.com/bbraeu/Creality-Helper-Script-Wiki-K2/discussions](https://github.com/bbraeu/Creality-Helper-Script-Wiki-K2/discussions) |
 | Guilouz Discussions | [github.com/Guilouz/Creality-Helper-Script-Wiki/discussions](https://github.com/Guilouz/Creality-Helper-Script-Wiki/discussions) |
 
 ---

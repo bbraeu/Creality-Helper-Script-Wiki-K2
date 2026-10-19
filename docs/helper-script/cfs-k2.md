@@ -141,8 +141,9 @@ in `box.cfg` and `gcode_macro.cfg` are prefixed with an underscore (e.g.
 makes a macro private/hidden — it cannot be called by the CFS system, the UI,
 or other macros. This causes the entire load/unload sequence to silently fail.
 
-The helper script automatically patches this on startup. If you are not using
-the helper script, apply the fix manually:
+The helper script can apply this fix for you: it asks on the first start, or
+enable it later in **Tools → 35) Stock config fixes**. Without the helper script,
+apply the fix manually:
 
 ```bash
 cp /mnt/UDISK/printer_data/config/box.cfg /mnt/UDISK/printer_data/config/box.cfg.bak

@@ -1,10 +1,38 @@
 # Helper Script Changelog
 
 The changelog of the helper script itself, as kept in the script repository's
-[CHANGELOG.md](https://github.com/bbraeu/Creality-Helper-Script-K2-Base/blob/main/CHANGELOG.md).
+[CHANGELOG.md](https://github.com/bbraeu/Creality-Helper-Script-K2/blob/main/CHANGELOG.md).
 Entries before October 2026 come from the K2 Plus helper script
 ([sw3defy/Creality-Helper-Script-K2-Plus](https://github.com/sw3defy/Creality-Helper-Script-K2-Plus))
 this fork is based on. For the wiki's own history see the [Changelog](changelog.md).
+
+---
+
+## [Unreleased]
+
+### Changed
+- **Repository renamed to `Creality-Helper-Script-K2`** (wiki:
+  `Creality-Helper-Script-Wiki-K2`) - the helper is for the whole K2 series, not
+  only the base model. Old GitHub links redirect; git installs switch their
+  `origin` to the new URL on the next update check, so Moonraker's Software
+  Updates keep recognising the helper.
+- **Stock config fixes are opt-in.** The helper no longer edits `box.cfg`,
+  `gcode_macro.cfg` and `printer.cfg` on every start and boot without asking
+  (macro underscore renames, `params.BED_TEMP` defaults, `mesh_min 20,20`). On
+  the first start it explains the fixes and asks (default: no); the answer is
+  kept in `.stock_config_fixes` and can be changed in Tools -> 35. When enabled,
+  a file is only written if a fix actually changes it, and the original is saved
+  as `<file>.helper-<date>.bak` first.
+- **`motor_control.cfg` is never replaced automatically** any more. The helper
+  only warns when it differs from this model's stock file; Tools -> 35 shows the
+  differences and restores it after confirmation (with a backup).
+
+### Fixed
+- **Fluidd config editor with Creality's Moonraker.** Fluidd 1.37+ cannot edit
+  config files against the stock Moonraker; Install menu 8 now installs Fluidd
+  v1.36.4 there and the latest Fluidd only with the updatable Moonraker.
+- The Moonraker `[update_manager]` warning now points to the updatable
+  Moonraker (Install menu 1 -> 2), which is what makes Software Updates work.
 
 ---
 

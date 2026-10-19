@@ -22,13 +22,15 @@ The Creality K2 Helper Script is a native shell-based tool for the K2 and K2 Com
 | Adds services | OpenWrt procd services in `/etc/init.d/` (Mobileraker Companion, Git Backup) and an rc.d script for the camera bridge |
 | Service restarts | Uses `/etc/rc.d/S55klipper`, Moonraker's init script and `/etc/rc.d/S80nginx` — **not** `supervisorctl` (which does not exist on the K2) |
 | Uninstall | Every feature can be removed from the Remove menu (option 20) |
-| Stock files | Some stock files **are** patched: macro names in `gcode_macro.cfg` / `box.cfg` (see below), `mesh_min` in `printer.cfg`, `nginx.conf` and Fluidd/Mainsail `index.html` (Camera Support), `gcode_macro.cfg` (KAMP-K2, backed up as `gcode_macro.cfg.pre_kamp`), and Klipper's `extras` folder (KAMP-K2, Gcode Shell Command). |
+| Stock files | Some stock files **are** patched: macro names in `gcode_macro.cfg` / `box.cfg` and `mesh_min` in `printer.cfg` only if you allow it (see below), `nginx.conf` and Fluidd/Mainsail `index.html` (Camera Support), `gcode_macro.cfg` (KAMP-K2, backed up as `gcode_macro.cfg.pre_kamp`), and Klipper's `extras` folder (KAMP-K2, Gcode Shell Command). |
 
 ### What runs every time the script starts
 
 Each start of `helper.sh` (and every boot, via `/etc/rc.local`) re-applies:
 
-- **Stock config fixes** — removes the leading underscore from stock CFS / print macros in `box.cfg` and `gcode_macro.cfg` (they were unreachable, causing CFS load/unload errors), changes a stock `mesh_min: 5,5` to `20,20`, restores `motor_control.cfg` from this model's stock copy in `/rom` if it was truncated, and links `/usr/bin/wget` to Entware's `wget` (needed by Timelapse).
+- **Stock config fixes — only if you enabled them.** On the first start the helper explains them and asks (default: **no**); change it later in **Tools → 35) Stock config fixes**. When enabled, it removes the leading underscore from stock CFS / print macros in `box.cfg` and `gcode_macro.cfg` (needed on firmware versions that call them without it — CFS load/unload errors, `Unknown command: WAIT_TEMP_START`), makes `START_PRINT` use `BED_TEMP` / `EXTRUDER_TEMP` with defaults, and changes a stock `mesh_min: 5,5` to `20,20`. A file is only written when a fix actually changes it, and the original is saved first as `<file>.helper-<date>.bak`.
+- **`motor_control.cfg`** is never changed automatically. If it differs from this model's stock copy in `/rom`, the helper only warns; **Tools → 35** shows the differences and restores it after you confirm (with a backup).
+- **`/usr/bin/wget`** is linked to Entware's `wget` (needed by Timelapse).
 - **Add-ons outside `/mnt/UDISK`** — a firmware update replaces `/usr/share/klipper`, so the KAMP-K2 and Gcode Shell Command Klipper extras and the KAMP-K2 macro patches are re-applied (Klipper is restarted automatically only at boot).
 - **Moonraker include** — makes sure the stock Moonraker config loads the UDISK `moonraker.conf`, and enables `queue_gcode_uploads`.
 
@@ -41,10 +43,10 @@ Connect via SSH (user `root`, password `creality_2024`). See [SSH Connection](..
 The K2 stock firmware has no `git`, `wget`, or `curl`, so Python 3 is used to download the script. Run:
 
 ```sh
-python3 -c "import urllib.request; urllib.request.urlretrieve('https://github.com/bbraeu/Creality-Helper-Script-K2-Base/archive/refs/heads/main.zip', '/tmp/helper.zip')"
+python3 -c "import urllib.request; urllib.request.urlretrieve('https://github.com/bbraeu/Creality-Helper-Script-K2/archive/refs/heads/main.zip', '/tmp/helper.zip')"
 python3 -c "import shutil; shutil.unpack_archive('/tmp/helper.zip', '/tmp/')"
 mkdir -p /mnt/UDISK/helper-script
-cp -r /tmp/Creality-Helper-Script-K2-Base-main/* /mnt/UDISK/helper-script/
+cp -r /tmp/Creality-Helper-Script-K2-main/* /mnt/UDISK/helper-script/
 chmod +x /mnt/UDISK/helper-script/helper.sh
 sh /mnt/UDISK/helper-script/helper.sh
 ```
@@ -62,7 +64,7 @@ When you run the script you will see:
 ======================================================
    Creality K2 Helper Script
 ======================================================
-   https://bbraeu.github.io/Creality-Helper-Script-Wiki-K2-Base
+   https://bbraeu.github.io/Creality-Helper-Script-Wiki-K2
 ======================================================
    Detected: K2 (no chamber heater, bed mesh 20,20 to 255,255)
 
@@ -118,6 +120,7 @@ When you run the script you will see:
    32) Clear logs & cache
    33) System information
    34) Update helper script               [installed: v2.0.0]
+   35) Stock config fixes                 [off]
 
     0) Exit
 
@@ -143,7 +146,7 @@ The menu is arranged in dependency order — install top to bottom:
 
 ## Update
 
-The helper script updates itself from **GitHub releases** (`vMAJOR.MINOR.PATCH`, e.g. [v2.0.0](https://github.com/bbraeu/Creality-Helper-Script-K2-Base/releases/tag/v2.0.0)) — not from every commit. The installed release is stored in `/mnt/UDISK/helper-script/.version`. Every time `helper.sh` starts, it compares it with the newest release (drafts and pre-releases are ignored), shows that release's notes and asks **Update now? [Y/n]** — press Enter to update; the helper then restarts with the new files. It never downgrades.
+The helper script updates itself from **GitHub releases** (`vMAJOR.MINOR.PATCH`, e.g. [v2.0.0](https://github.com/bbraeu/Creality-Helper-Script-K2/releases/tag/v2.0.0)) — not from every commit. The installed release is stored in `/mnt/UDISK/helper-script/.version`. Every time `helper.sh` starts, it compares it with the newest release (drafts and pre-releases are ignored), shows that release's notes and asks **Update now? [Y/n]** — press Enter to update; the helper then restarts with the new files. It never downgrades.
 
 Other ways to update:
 

@@ -1,6 +1,6 @@
 # Tools Menu
 
-The `[Tools] Menu` (options 25–34) collects maintenance and diagnostic helpers.
+The `[Tools] Menu` (options 25–35) collects maintenance and diagnostic helpers.
 
 | Option | Tool | What it does |
 |---|---|---|
@@ -14,6 +14,22 @@ The `[Tools] Menu` (options 25–34) collects maintenance and diagnostic helpers
 | 32 | Clear logs & cache | Frees space on `/mnt/UDISK` (see below) |
 | 33 | System information | Printer and system overview (see below) |
 | 34 | Update helper script | Installs the newest **release** from GitHub and restarts the helper — see [Update](../helper-script-installation.md#update) |
+| 35 | Stock config fixes | Switches the optional fixes for Creality's config files on or off, restores `motor_control.cfg` from stock (see below) |
+
+---
+
+## Stock Config Fixes (option 35)
+
+Optional fixes for Creality's stock config files. The helper asks once on the first start (default: no) and never changes these files without your consent.
+
+| Choice | What it does |
+|---|---|
+| 1) Enable | Applies the fixes now and after every boot (firmware updates restore the stock files): macros with a leading underscore in `box.cfg` / `gcode_macro.cfg` are renamed, `START_PRINT` uses `BED_TEMP` / `EXTRUDER_TEMP` with defaults, `mesh_min: 5,5` becomes `20,20` in `printer.cfg` |
+| 2) Disable | Stops changing the files. Files already patched keep their changes — the originals are the `.helper-<date>.bak` files next to them |
+| 3) Restore `motor_control.cfg` | Shows how your `motor_control.cfg` differs from this model's stock copy in `/rom` and replaces it after you confirm (your file is kept as a `.helper-<date>.bak`). A truncated `motor_control.cfg` causes `key789` X/Y tracking errors during CFS cuts |
+| 4) List backups | Lists the `.helper-*.bak` files in the config folder |
+
+A file is only written when a fix actually changes it, and it is backed up first. Restart Klipper afterwards to load the changed files.
 
 ---
 

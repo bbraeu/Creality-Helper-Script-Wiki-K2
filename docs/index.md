@@ -1,6 +1,6 @@
 # Creality K2 — Helper Script Wiki
 
-This wiki covers the complete process to root the **Creality K2** and **K2 Combo** (with CFS), and add features using the Creality K2 Helper Script.
+This wiki covers the complete process to root the **Creality K2 series** — K2, K2 Combo (with CFS), K2 Pro and K2 Plus — and add features using the Creality K2 Helper Script.
 
 The advantage of rooting your printer is having full access to the firmware and configuration files, enabling you to install community tools, improve print quality, and extend your printer far beyond its factory defaults.
 
@@ -8,10 +8,10 @@ The advantage of rooting your printer is having full access to the firmware and 
     If you don't know what you're doing, I don't recommend following this guide.
     Modifying system files can cause issues if done incorrectly. Always back up your configuration before making changes.
 
-!!! note "This wiki is for the K2 (base model)"
-    This wiki is written for the **Creality K2** (260 × 260 × 260 mm) and **K2 Combo (with CFS)**.
-    The helper script detects the hardware from your `printer.cfg` and also runs on the K2 Pro and K2 Plus, but hardware details on these pages (build volume, chamber, pins) describe the K2 base model.
-    For the K2 Plus, see [sw3defy's K2 Plus wiki](https://sw3defy.github.io/Creality-Helper-Script-Wiki-K2-Plus/). For K1 Series, K1C, K1 Max, or Ender-3 V3 Series — see the [original Guilouz wiki](https://guilouz.github.io/Creality-Helper-Script-Wiki/).
+!!! note "This wiki is for the whole K2 series"
+    The helper script runs on the **K2 / K2 Combo**, **K2 Pro** and **K2 Plus**: it detects the hardware (bed size, chamber heater, chamber fan / sensor, fans, Z-tilt) from your `printer.cfg` instead of assuming one model.
+    Hardware examples on these pages (build volume, chamber, pins) were verified on the K2 base model (260 × 260 × 260 mm) unless a page says otherwise.
+    For K1 Series, K1C, K1 Max, or Ender-3 V3 Series — see the [original Guilouz wiki](https://guilouz.github.io/Creality-Helper-Script-Wiki/).
 
 !!! warning "Verification status"
     This wiki is adapted from the K2 Plus wiki. Everything that is shared across the K2 family (paths under `/mnt/UDISK/`, services, root access, Fluidd on port 4408) carries over unchanged. K2-base-specific verification on real hardware is ongoing — pages that still contain unverified details say so at the top.
@@ -67,9 +67,9 @@ K2 base specifications: max speed 600 mm/s, max acceleration 20,000 mm/s², nozz
 
 ## Wiki
 
-Full wiki available at: [bbraeu.github.io/Creality-Helper-Script-Wiki-K2-Base](https://bbraeu.github.io/Creality-Helper-Script-Wiki-K2-Base/)
+Full wiki available at: [bbraeu.github.io/Creality-Helper-Script-Wiki-K2](https://bbraeu.github.io/Creality-Helper-Script-Wiki-K2/)
 
-Helper Script repository: [github.com/bbraeu/Creality-Helper-Script-K2-Base](https://github.com/bbraeu/Creality-Helper-Script-K2-Base)
+Helper Script repository: [github.com/bbraeu/Creality-Helper-Script-K2](https://github.com/bbraeu/Creality-Helper-Script-K2)
 
 ---
 

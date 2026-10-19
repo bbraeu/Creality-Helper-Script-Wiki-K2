@@ -1,10 +1,27 @@
 # Changelog
 
+## Renamed to K2, opt-in stock config fixes — October 19, 2026
+
+- The repositories are renamed for the whole K2 series:
+  [bbraeu/Creality-Helper-Script-K2](https://github.com/bbraeu/Creality-Helper-Script-K2)
+  and this wiki, now at
+  [bbraeu.github.io/Creality-Helper-Script-Wiki-K2](https://bbraeu.github.io/Creality-Helper-Script-Wiki-K2/).
+  The pages describe the K2, K2 Pro and K2 Plus; hardware examples were
+  verified on the K2 base model.
+- **[Stock config fixes](helper-script/tools-menu/index.md#stock-config-fixes-option-35)**
+  are now opt-in (Tools → 35): the helper asks before changing `box.cfg`,
+  `gcode_macro.cfg` or `printer.cfg`, backs files up first and never replaces
+  `motor_control.cfg` on its own.
+- **[Fluidd](helper-script/fluidd-k2.md)**: with Creality's Moonraker the helper
+  installs Fluidd v1.36.4 — the config editor of Fluidd 1.37+ fails there.
+
+---
+
 ## Helper Script v2.0.0 — October 16, 2026
 
 - The helper now updates from **GitHub releases** instead of every commit —
   see [Install Helper Script → Update](helper-script/helper-script-installation.md#update)
-  and the [v2.0.0 release](https://github.com/bbraeu/Creality-Helper-Script-K2-Base/releases/tag/v2.0.0).
+  and the [v2.0.0 release](https://github.com/bbraeu/Creality-Helper-Script-K2/releases/tag/v2.0.0).
 - Menu numbers updated for **19) Auto Power Off**: Remove menu is now 20,
   Backup & Restore 21–24, Tools 25–34 (34 = update helper script).
 
@@ -55,8 +72,8 @@
 ### Wiki
 - **Adapted from the K2 Plus wiki to the Creality K2 / K2 Combo**
   (260 × 260 × 260 mm, no chamber heater). New site URL:
-  [bbraeu.github.io/Creality-Helper-Script-Wiki-K2-Base](https://bbraeu.github.io/Creality-Helper-Script-Wiki-K2-Base/),
-  script repository [bbraeu/Creality-Helper-Script-K2-Base](https://github.com/bbraeu/Creality-Helper-Script-K2-Base).
+  [bbraeu.github.io/Creality-Helper-Script-Wiki-K2](https://bbraeu.github.io/Creality-Helper-Script-Wiki-K2/),
+  script repository [bbraeu/Creality-Helper-Script-K2](https://github.com/bbraeu/Creality-Helper-Script-K2).
 - All `*-k2plus.md` pages renamed to `*-k2.md`; *Heated Chamber* replaced
   by [Chamber Temperature](improvements/chamber-temperature-k2.md)
   (sensor, chamber fan, passive heat-soak).

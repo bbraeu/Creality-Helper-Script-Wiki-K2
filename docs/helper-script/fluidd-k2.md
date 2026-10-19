@@ -25,9 +25,12 @@ From the helper script menu, select **option 8 — Fluidd (install/update/repair
 
 When Fluidd is already installed you will be offered:
 
-- **Update** — download and install the latest release
-- **Repair** — re-download and reinstall the current latest (fixes corrupted files)
+- **Update** — download and install Fluidd (version: see below)
+- **Repair** — re-download and reinstall it (fixes corrupted files)
 - **Restore nginx block only** — fixes port 4408 access without re-downloading Fluidd
+
+!!! warning "Fluidd 1.37+ and Creality's Moonraker"
+    From Fluidd 1.37 on, editing config files fails against the K2's stock (Creality) Moonraker. With the stock Moonraker the helper therefore installs **Fluidd v1.36.4**, the newest version whose config editor works there. With the [updatable Moonraker](moonraker-k2.md) (Install menu 1 → 2) it installs the **latest** Fluidd, and later updates come from **Settings → Software Updates**.
 
 ---
 
@@ -36,8 +39,9 @@ When Fluidd is already installed you will be offered:
 The stock firmware has no `wget`; the commands below need [Entware](entware-k2.md) (`wget` is installed with it). The helper script (option 8) downloads with Python instead.
 
 ```bash
-# Download latest Fluidd
-wget -O /tmp/fluidd.zip https://github.com/fluidd-core/fluidd/releases/latest/download/fluidd.zip
+# Download Fluidd v1.36.4 (Creality's Moonraker) - with the updatable Moonraker
+# use https://github.com/fluidd-core/fluidd/releases/latest/download/fluidd.zip
+wget -O /tmp/fluidd.zip https://github.com/fluidd-core/fluidd/releases/download/v1.36.4/fluidd.zip
 
 # Install
 mkdir -p /usr/share/fluidd

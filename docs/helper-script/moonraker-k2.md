@@ -145,7 +145,7 @@ After a **firmware update** (which restores Creality's service file) the helper 
 
 ### Prebuilt packages and weekly check
 
-The K2 has 488 MB RAM and no swap — compiling Moonraker's dependencies there gets killed by the out-of-memory killer. A GitHub workflow in the helper repository ([`moonraker-wheels.yml`](https://github.com/bbraeu/Creality-Helper-Script-K2-Base/blob/main/.github/workflows/moonraker-wheels.yml)) therefore builds them in an emulated ARMv7 container with the same Entware toolchain and publishes them as `moonraker-wheels-<hash>` releases. It runs **weekly** and:
+The K2 has 488 MB RAM and no swap — compiling Moonraker's dependencies there gets killed by the out-of-memory killer. A GitHub workflow in the helper repository ([`moonraker-wheels.yml`](https://github.com/bbraeu/Creality-Helper-Script-K2/blob/main/.github/workflows/moonraker-wheels.yml)) therefore builds them in an emulated ARMv7 container with the same Entware toolchain and publishes them as `moonraker-wheels-<hash>` releases. It runs **weekly** and:
 
 - checks that the newest Moonraker still runs on the K2's Python 3.11 (`requires-python`). If not, the run fails and opens an issue — **then don't update Moonraker from Software Updates** until that is resolved;
 - rebuilds the packages when Moonraker's requirements changed.

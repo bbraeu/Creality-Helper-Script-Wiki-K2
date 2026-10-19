@@ -1,18 +1,17 @@
 # Creality K2 - Helper Script Wiki
 
-The wiki for the Creality K2 Helper Script, for the **Creality K2** (base model, 260 × 260 mm) and **K2 Combo (with CFS)**.
-The helper script also works on the K2 Pro and K2 Plus: it reads the hardware from your stock `printer.cfg`
-instead of assuming one model.
+The wiki for the Creality K2 Helper Script, for the **Creality K2 series**: K2 / K2 Combo (with CFS), K2 Pro and K2 Plus.
+The helper script reads the hardware from your stock `printer.cfg` instead of assuming one model.
 
 Forked from [sw3defy's K2 Plus Helper Script Wiki](https://github.com/sw3defy/Creality-Helper-Script-Wiki-K2-Plus), which is based on the excellent [Guilouz Creality Helper Script Wiki](https://github.com/Guilouz/Creality-Helper-Script-Wiki).
 
 ## Wiki
 
-**[https://bbraeu.github.io/Creality-Helper-Script-Wiki-K2-Base/](https://bbraeu.github.io/Creality-Helper-Script-Wiki-K2-Base/)**
+**[https://bbraeu.github.io/Creality-Helper-Script-Wiki-K2/](https://bbraeu.github.io/Creality-Helper-Script-Wiki-K2/)**
 
 ## Helper Script
 
-**[https://github.com/bbraeu/Creality-Helper-Script-K2-Base](https://github.com/bbraeu/Creality-Helper-Script-K2-Base)**
+**[https://github.com/bbraeu/Creality-Helper-Script-K2](https://github.com/bbraeu/Creality-Helper-Script-K2)**
 
 ## About
 
@@ -46,7 +45,7 @@ unverified hardware details say so.
 
 ## Discussions
 
-[Join the discussion](https://github.com/bbraeu/Creality-Helper-Script-Wiki-K2-Base/discussions)
+[Join the discussion](https://github.com/bbraeu/Creality-Helper-Script-Wiki-K2/discussions)
 
 ## Support
 

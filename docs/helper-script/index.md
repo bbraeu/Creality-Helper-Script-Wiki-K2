@@ -1,10 +1,10 @@
 # Helper Script for Creality K2
 
-The Creality K2 Helper Script is a menu-driven shell script for the **Creality K2** (base model, 260 × 260 mm) and **K2 Combo (with CFS)**. It installs features by writing Klipper `.cfg` files to `/mnt/UDISK/printer_data/config/`, extending the stock Moonraker, and adding a few services — see [Install Helper Script](helper-script-installation.md) for the installation commands.
+The Creality K2 Helper Script is a menu-driven shell script for the **Creality K2 series**: K2 / K2 Combo (with CFS), K2 Pro and K2 Plus. It installs features by writing Klipper `.cfg` files to `/mnt/UDISK/printer_data/config/`, extending the stock Moonraker, and adding a few services — see [Install Helper Script](helper-script-installation.md) for the installation commands.
 
 It is forked from [sw3defy's K2 Plus Helper Script](https://github.com/sw3defy/Creality-Helper-Script-K2-Plus), which is based on [Guilouz's Creality Helper Script](https://github.com/Guilouz/Creality-Helper-Script).
 
-Repository: [github.com/bbraeu/Creality-Helper-Script-K2-Base](https://github.com/bbraeu/Creality-Helper-Script-K2-Base)
+Repository: [github.com/bbraeu/Creality-Helper-Script-K2](https://github.com/bbraeu/Creality-Helper-Script-K2)
 
 ---
 
@@ -55,7 +55,7 @@ Generated macros only contain what your hardware has. On a K2 base model this me
 | 16 | OctoApp Companion | [OctoApp Companion](octoapp-companion.md) |
 | 17 | Git Backup | [Git Backup](git-backup.md) |
 | 18 | Klipper Gcode Shell Command | [Klipper Gcode Shell Command](gcode-shell-command.md) |
-| 19 | Auto Power Off (smart plug after the print) | [Auto Power Off](https://github.com/bbraeu/Creality-Helper-Script-K2-Base#auto-power-off) |
+| 19 | Auto Power Off (smart plug after the print) | [Auto Power Off](https://github.com/bbraeu/Creality-Helper-Script-K2#auto-power-off) |
 | 20 | Remove a feature (1–19, same order) | [Install Menu](install-menu/index.md#remove-menu) |
 | 21–24 | Backup / restore Klipper configuration and Moonraker database | [Backup & Restore Menu](backup-menu/index.md) |
 | 25–34 | Restarts, logs, installed features, Entware update, clear logs & cache, system information, update helper script | [Tools Menu](tools-menu/index.md) |
