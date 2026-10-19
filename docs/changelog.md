@@ -1,5 +1,23 @@
 # Changelog
 
+## Creality Print v7.3.0 Start G-code Corrected — October 19, 2026
+
+- The start G-code shown as *Creality's original* was not the one in Creality
+  Print v7.3.0. The **Creality K2** system preset has two branches: with the
+  CFS (cut, load, flush and wipe three times behind the bed) and without, both
+  ending in a purge line along the front edge.
+  [Creality Print](slicers/creality-print.md#start-g-code-creality-original)
+  now shows the real block, and
+  [Start G-code with KAMP-K2](slicers/creality-print.md#start-g-code-with-kamp-k2)
+  replaces the purge line in **both** branches with `LINE_PURGE` — the CFS
+  sequence stays. If you pasted the short KAMP block into Creality Print
+  before, replace it: it left out Creality's CFS flush and wipe sequence.
+- [OrcaSlicer](slicers/orcaslicer.md#machine-start-g-code-creality-original-without-kamp-k2)
+  now shows OrcaSlicer's own K2 start G-code (taken from Creality Print 7.0.1).
+  The KAMP block for OrcaSlicer is unchanged.
+
+---
+
 ## Wiki Cleanup — October 19, 2026
 
 - Removed files left over from the K1 wiki that no page used: the `downloads/`

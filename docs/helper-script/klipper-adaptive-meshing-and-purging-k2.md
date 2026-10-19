@@ -63,48 +63,34 @@ The installer checks this itself and prints either *"KAMP installed - bed mesh o
 
 ## Start G-code
 
-KAMP-K2 needs one change in the slicer: the fixed purge line in Creality's start G-code is replaced with KAMP's `LINE_PURGE`. Everything else stays as Creality ships it. Creality's K2 profile uses the same placeholders in **OrcaSlicer** and **Creality Print**, so the block below works in both:
+KAMP-K2 needs one change in the slicer: the fixed purge line in Creality's start G-code is replaced with KAMP's `LINE_PURGE`. Everything else stays as Creality ships it. Creality Print and OrcaSlicer ship **different** K2 start G-codes, so take the block from the page of your slicer:
 
-- [OrcaSlicer → Machine start G-code with KAMP-K2](../slicers/orcaslicer.md#machine-start-g-code-with-kamp-k2)
-- [Creality Print → Start G-code with KAMP-K2](../slicers/creality-print.md#start-g-code-with-kamp-k2)
+- [Creality Print → Start G-code with KAMP-K2](../slicers/creality-print.md#start-g-code-with-kamp-k2) — two branches (with / without CFS), both get `LINE_PURGE`
+- [OrcaSlicer → Machine start G-code with KAMP-K2](../slicers/orcaslicer.md#machine-start-g-code-with-kamp-k2) — one block, shown below
 
 ### Creality's original K2 start G-code
 
-From the **Creality K2 0.4 nozzle** printer profile of Creality Print (v7.3.0):
-
-```gcode
-M140 S0
-M104 S0 
-START_PRINT EXTRUDER_TEMP=[nozzle_temperature_initial_layer] BED_TEMP=[bed_temperature_initial_layer_single]
-T[initial_no_support_extruder]
-M104 S[nozzle_temperature_initial_layer]
-M204 S2000
-G1 Z3 F600
-M83
-G1 Y150 F12000
-G1 X0 F12000
-G1 Z0.2 F600
-G1 X0 Y150 F6000
-G1 E0.8 F300
-G1 X0 Y0 E9 F{filament_max_volumetric_speed[initial_extruder]/0.3*60}
-G1 X150 Y0 E9 F{filament_max_volumetric_speed[initial_extruder]/0.3*60}
-G92 E0
-G1 Z1 F600
-```
+**Creality Print** (v7.3.0, **Creality K2 0.4 nozzle** system preset) — the complete 181 lines are on the [Creality Print](../slicers/creality-print.md#start-g-code-creality-original) page. What they do:
 
 | Lines | What they do |
 |---|---|
 | `M140 S0`, `M104 S0` | Clear any heater targets — `START_PRINT` does the heating. |
 | `START_PRINT EXTRUDER_TEMP=… BED_TEMP=…` | Heat, home, clean the nozzle (stock `gcode_macro.cfg`). Must stay on **one line**. |
-| `T[initial_no_support_extruder]` | Load the first filament — on the K2 Combo the CFS feeds it to the nozzle here. |
-| `M104 S[nozzle_temperature_initial_layer]` | Print temperature of the first filament. |
-| `M204 S2000`, `G1 Z3 F600`, `M83` | Start acceleration, lift 3 mm, relative extrusion. |
-| `G1 Y150 …` to `G1 X150 Y0 E9 …` | **Fixed purge line** at Z 0.2: down the left edge from Y 150 to Y 0, then along the front edge to X 150. |
-| `G92 E0`, `G1 Z1 F600` | Reset the extruder position, lift to Z 1. |
+| `{if multicolor_method}` … `{else}` … `{endif}` | Two branches — the first with the CFS (K2 Combo), the second without. |
+| *CFS:* `M83`, `M8200 P S…`, `G0 Y150`, `G0 X10`, `M8200 C S0` | Relative extrusion, CFS prepare, move to the cutter and cut the filament. |
+| *CFS:* `G0 Y261` … `G0 X115`, `M8200 R` | Move to the purge position behind the bed (Y 291.5), retract the old filament into the CFS. |
+| *CFS:* `M104 S[nozzle_temperature_range_high[…]]`, `M8200 L I…`, `T…` | Heat to the filament's **maximum** temperature, load the first slot. |
+| *CFS:* 3 × `; FLUSH_START` … `; WIPE` | Flush 90 mm each time (fast / slow in turns), part fan blast for 5 s, retract, wipe the nozzle. The third flush sets the print temperature (`M104`, no wait). |
+| *CFS:* `M8200 O`, `M204 S2000`, `G1 Z3 F600`, `G1 X137 F12000` | End the CFS operation, start acceleration, lift 3 mm. |
+| *Without CFS:* `T…`, `M104 S…`, `M204 S2000`, `G1 Z3 F600`, `M83` | Load the filament, print temperature, start acceleration, lift 3 mm, relative extrusion. |
+| `G1 X105 Y-1 …` to `G1 X155 …` | **Fixed purge line** at Z 0.3 along the **front edge** (Y −1), from X 105 to X 155. |
+| `G91`, `G1 X1 Z-0.3`, `G1 X4`, `G92 E0` (`G1 Z1 F600`) | Wipe on the bed, reset the extruder position (without CFS: lift 1 mm). |
 
-OrcaSlicer's built-in Creality K2 profile ships nearly the same block (with an extra comment header, `M109` instead of `M104` and a slightly different purge line).
+**OrcaSlicer**'s built-in Creality K2 profile is older (taken from Creality Print 7.0.1): one block without the CFS branch, `M109` instead of `M104`, and a purge line along the left and front edge — see [OrcaSlicer](../slicers/orcaslicer.md#machine-start-g-code-creality-original-without-kamp-k2).
 
 ### Start G-code with KAMP-K2
+
+OrcaSlicer's block with KAMP-K2:
 
 ```gcode
 M140 S0
@@ -118,12 +104,14 @@ M83
 LINE_PURGE
 ```
 
+For Creality Print, the same change is made at the end of each branch — [complete block](../slicers/creality-print.md#start-g-code-with-kamp-k2).
+
 Changes compared to Creality's original:
 
 | Original | With KAMP-K2 | Why |
 |---|---|---|
-| `M104 S[nozzle_temperature_initial_layer]` | `M109 S[nozzle_temperature_initial_layer]` | Waits until the nozzle is at print temperature before `LINE_PURGE` extrudes (as in OrcaSlicer's copy of the profile). |
-| Fixed purge line (`G1 Y150 …` to `G1 X150 Y0 E9 …`) | `LINE_PURGE` | Purges just in front of the print area instead of along the bed edge. Must come **after** `T…` — before it, the nozzle is still empty. |
+| `M104 S[nozzle_temperature_initial_layer]` | `M109 S[nozzle_temperature_initial_layer]` before `LINE_PURGE` | Waits until the nozzle is at print temperature before `LINE_PURGE` extrudes. In Creality Print's CFS branch the nozzle comes down from the filament's maximum temperature. OrcaSlicer's profile already has `M109`. |
+| Fixed purge line | `LINE_PURGE` | Purges just in front of the print area instead of along the bed edge. Must come **after** `T…` — before it, the nozzle is still empty. |
 | `G92 E0`, `G1 Z1 F600` | removed | `LINE_PURGE` ends with the nozzle raised by `purge_z_hop` (2 mm, a temporary Z offset). KAMP-K2's `G92` override clears it at the slicer's first `G92 E0` in the layer-change G-code. A `G92 E0` right after the purge would clear it too early — the K2 profile's tool-change G-code then moves to Z 0 and the nozzle can drag across the bed. |
 
 Optional additions:
@@ -140,8 +128,8 @@ KAMP reads the outlines of the objects from the `EXCLUDE_OBJECT_DEFINE` lines at
 
 1. `START_PRINT`: CFS prepare (`BOX_START_PRINT`), bed heats, nozzle preheats to 140 °C, `G28`, nozzle wipe (`NOZZLE_CLEAR`), wait for temperatures, `BOX_NOZZLE_CLEAN`, precise `G28 Z`.
 2. **Adaptive mesh** — `BED_MESH_CLEAR` + `BED_MESH_CALIBRATE`, probing only the area of the objects on the bed.
-3. The toolhead moves to the CFS purge chute, heats to print temperature and cleans the nozzle.
-4. `T<n>` loads the filament, `M109` waits for the print temperature, `LINE_PURGE` draws the purge line next to the objects and lifts the nozzle, then the first layer starts.
+3. `T<n>` loads the filament. With Creality Print and the CFS, the start G-code first cuts and unloads, loads the first slot, then flushes and wipes the nozzle at the purge position behind the bed.
+4. `M109` waits for the print temperature, `LINE_PURGE` draws the purge line next to the objects and lifts the nozzle, then the first layer starts.
 
 The `G29` / `BED_MESH_CALIBRATE_START_PRINT` that Creality's `master-server` fires before every print only clear the mesh now. In the console you see:
 
