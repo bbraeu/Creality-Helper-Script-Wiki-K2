@@ -119,7 +119,7 @@ Mainsail is not pre-installed. To add it on port `4409`, see [Mainsail](mainsail
 
 Option **1 → 2) Updatable Moonraker** replaces Creality's Moonraker with the current upstream [Moonraker](https://github.com/Arksine/moonraker). Then **Fluidd / Mainsail → Settings → Software Updates** works: Moonraker, Fluidd, Mainsail, Mobileraker Companion **and the helper script itself** can be updated from the web UI.
 
-Why a replacement is needed: Creality's Moonraker is an old, stripped build on Python 3.9 without git, so its update manager cannot run (see [below](#update-manager-with-creality-s-moonraker)). Current Moonraker needs Python 3.10 or newer, which [Entware](entware-k2.md) provides.
+Why a replacement is needed: Creality's Moonraker is an old, stripped build on Python 3.9 without git, so its update manager cannot run (see [below](#update-manager-with-crealitys-moonraker)). Current Moonraker needs Python 3.10 or newer, which [Entware](entware-k2.md) provides.
 
 !!! note "Requirements"
     - [Entware](entware-k2.md) (option 13) and about **600 MB** free on `/mnt/UDISK`

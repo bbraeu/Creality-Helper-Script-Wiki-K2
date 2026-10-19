@@ -1,6 +1,6 @@
 # Install Menu
 
-The `[Install] Menu` (options 1–18) is grouped in the order the features should be installed. Select a number, confirm, and the script does the rest. Selecting an option again for an installed feature offers to reinstall, update or repair it (or, for Git Backup and Entware, opens a small management menu).
+The `[Install] Menu` (options 1–19) is grouped in the order the features should be installed. Select a number, confirm, and the script does the rest. Selecting an option again for an installed feature offers to reinstall, update or repair it (or, for Git Backup and Entware, opens a small management menu).
 
 Make sure you have followed the [Install Helper Script](../helper-script-installation.md) section first.
 
@@ -48,7 +48,12 @@ Make sure you have followed the [Install Helper Script](../helper-script-install
 | 16 | [OctoApp Companion](../octoapp-companion.md) | Requires Entware |
 | 17 | [Git Backup](../git-backup.md) | Requires Entware; install option 18 first for macros |
 | 18 | [Klipper Gcode Shell Command](../gcode-shell-command.md) | `RUN_SHELL_COMMAND` for your own macros |
-| 19 | [Auto Power Off](https://github.com/bbraeu/Creality-Helper-Script-K2-Base#auto-power-off) | Switches the printer off with a smart plug once the print has cooled down |
+
+## Step 6: Power
+
+| Option | Feature | Notes |
+|---|---|---|
+| 19 | [Auto Power Off](../auto-power-off-k2.md) | Switches the printer off with a smart plug (Kasa, Tapo, Tasmota, Shelly, Home Assistant) once the print has cooled down |
 
 Not in the menu, but documented here:
 
@@ -81,4 +86,5 @@ Option **20 — Remove a feature** opens the `[Remove] Menu`. It lists the same 
 | 16 | OctoApp Companion (runs the upstream `uninstall.sh`) |
 | 17 | Git Backup (your GitHub repository is not touched) |
 | 18 | Klipper Gcode Shell Command (refused while a config still uses `[gcode_shell_command]`) |
+| 19 | Auto Power Off (also removes the `[power printer_plug]` device it created) |
 | 0 | Back to main menu |

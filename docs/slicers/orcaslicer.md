@@ -1,6 +1,6 @@
 # OrcaSlicer — K2
 
-OrcaSlicer is the recommended slicer for the K2 — in particular with [KAMP-K2](../helper-script/klipper-adaptive-meshing-and-purging-k2.md), because Creality Print still triggers its own full bed mesh.
+OrcaSlicer is the recommended slicer for the K2 — in particular with [KAMP-K2](../helper-script/klipper-adaptive-meshing-and-purging-k2.md), which is developed and tested with OrcaSlicer. Using Creality's own slicer instead: see [Creality Print](creality-print.md).
 
 Download: :material-github: [GitHub Releases](https://github.com/SoftFever/OrcaSlicer/releases/latest)
 
@@ -8,10 +8,7 @@ Download: :material-github: [GitHub Releases](https://github.com/SoftFever/OrcaS
 
 ## Printer Profile
 
-Select the Creality K2 profile that matches your printer (**Printer → Creality**). If your OrcaSlicer version does not list the K2 base model, create a custom printer from another K2-family profile and set the values below.
-
-!!! warning "Unverified profile name"
-    The exact name of the K2 base profile in OrcaSlicer has not been verified for this wiki. Make sure the build volume is **260 × 260 × 260 mm** — a K2 Plus profile (350 mm) will send moves outside the K2's travel range.
+Select **Creality → Creality K2** with your nozzle size (0.2 / 0.4 / 0.6 / 0.8 mm). The K2 base profile is **Creality K2** — not K2 Plus (350 mm) or K2 Pro (300 mm), whose larger bed sends moves outside the K2's travel range, and not the smaller K2 SE. If you build a printer profile yourself, use the values below.
 
 | Setting | K2 value |
 |---|---|
@@ -32,33 +29,55 @@ Select the Creality K2 profile that matches your printer (**Printer → Creality
 
 In OrcaSlicer, edit your printer preset and go to the **Machine G-code** tab.
 
-### Machine start G-code — with KAMP-K2 (recommended)
+### Machine start G-code — Creality original (without KAMP-K2)
 
-If you installed [KAMP-K2](../helper-script/klipper-adaptive-meshing-and-purging-k2.md) (option 6), use:
-
-```gcode
-START_PRINT EXTRUDER_TEMP=[nozzle_temperature_initial_layer] BED_TEMP=[bed_temperature_initial_layer_single]
-T[initial_no_support_extruder]
-LINE_PURGE
-M204 S2000
-M83
-```
-
-- Also enable **Print Settings → Others → Output options → Label objects** — KAMP needs the object outlines.
-- `LINE_PURGE` **must come after** `T[initial_no_support_extruder]`: on the K2 Combo, the CFS loads the filament on `T<n>`; a purge before that runs with an empty nozzle.
-- Add `MESH=0` to the `START_PRINT` line to skip the bed mesh for one print.
-
-### Machine start G-code — without KAMP-K2
+OrcaSlicer's **Creality K2** printer profile already contains Creality's start G-code — keep it. For a self-made printer profile, use Creality's original from Creality Print:
 
 ```gcode
-SET_PRINT_STATS_INFO TOTAL_LAYER=[total_layer_count]
 M140 S0
 M104 S0
 START_PRINT EXTRUDER_TEMP=[nozzle_temperature_initial_layer] BED_TEMP=[bed_temperature_initial_layer_single]
+T[initial_no_support_extruder]
+M104 S[nozzle_temperature_initial_layer]
+M204 S2000
+G1 Z3 F600
+M83
+G1 Y150 F12000
+G1 X0 F12000
+G1 Z0.2 F600
+G1 X0 Y150 F6000
+G1 E0.8 F300
+G1 X0 Y0 E9 F{filament_max_volumetric_speed[initial_extruder]/0.3*60}
+G1 X150 Y0 E9 F{filament_max_volumetric_speed[initial_extruder]/0.3*60}
+G92 E0
+G1 Z1 F600
 ```
 
+What each line does: [KAMP-K2 → Creality's original K2 start G-code](../helper-script/klipper-adaptive-meshing-and-purging-k2.md#crealitys-original-k2-start-g-code).
+
+### Machine start G-code — with KAMP-K2
+
+If you installed [KAMP-K2](../helper-script/klipper-adaptive-meshing-and-purging-k2.md) (option 6), **replace** the whole start G-code with Creality's original, with the fixed purge line swapped for `LINE_PURGE`:
+
+```gcode
+M140 S0
+M104 S0
+START_PRINT EXTRUDER_TEMP=[nozzle_temperature_initial_layer] BED_TEMP=[bed_temperature_initial_layer_single]
+T[initial_no_support_extruder]
+M109 S[nozzle_temperature_initial_layer]
+M204 S2000
+G1 Z3 F600
+M83
+LINE_PURGE
+```
+
+- **Print Settings → Others → G-code output → Exclude objects** must be enabled — KAMP reads the object outlines from it. OrcaSlicer's Creality K2 presets have it on.
+- Optional: `SET_PRINT_STATS_INFO TOTAL_LAYER=[total_layer_count]` as the first line for the layer count in Fluidd / Mainsail (see *Layer change G-code* below); `MESH=0` on the `START_PRINT` line skips the mesh for one print.
+
+What changed compared to the original and why, what happens at print start and which console messages to expect: [KAMP-K2 → Start G-code](../helper-script/klipper-adaptive-meshing-and-purging-k2.md#start-g-code-with-kamp-k2).
+
 !!! warning "One command per line — never split a command"
-    Both blocks above have **several lines, one complete command per line**. What must not happen is a single command being split over several lines: if your template has line breaks between `START_PRINT` and its parameters (for example, pasted from an older guide or edited by hand), the sliced file contains `BED_TEMP=60` and `EXTRUDER_TEMP=220` as separate lines. Klipper then sees them as unrecognized standalone commands and logs `Unknown command` (key61) errors for each one. Keep `START_PRINT EXTRUDER_TEMP=... BED_TEMP=...` together on one line and re-slice.
+    The blocks above have **several lines, one complete command per line**. What must not happen is a single command being split over several lines: if your template has line breaks between `START_PRINT` and its parameters (for example, pasted from an older guide or edited by hand), the sliced file contains `BED_TEMP=60` and `EXTRUDER_TEMP=220` as separate lines. Klipper then sees them as unrecognized standalone commands and logs `Unknown command` (key61) errors for each one. Keep `START_PRINT EXTRUDER_TEMP=... BED_TEMP=...` together on one line and re-slice.
 
 !!! note "No CHAMBER_TEMP on the K2"
     K2 Plus profiles pass `CHAMBER_TEMP=[chamber_temperature]` to `START_PRINT`. The K2 has no chamber heater, so it is left out here. See [Chamber Temperature](../improvements/chamber-temperature-k2.md).
@@ -67,6 +86,8 @@ START_PRINT EXTRUDER_TEMP=[nozzle_temperature_initial_layer] BED_TEMP=[bed_tempe
 ```gcode
 END_PRINT
 ```
+
+With [Auto Power Off](../helper-script/auto-power-off-k2.md) installed but not armed for every print, add `ACTIVATE_POWER_OFF` after `END_PRINT` in a profile you use for long or overnight prints.
 
 **Before layer change G-code:**
 ```gcode

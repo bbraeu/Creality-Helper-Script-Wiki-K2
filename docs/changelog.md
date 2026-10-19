@@ -14,6 +14,29 @@
   `motor_control.cfg` on its own.
 - **[Fluidd](helper-script/fluidd-k2.md)**: with Creality's Moonraker the helper
   installs Fluidd v1.36.4 — the config editor of Fluidd 1.37+ fails there.
+- **New look:** warm grey background, black header, amber for the current page,
+  Big Shoulders Display headings and Barlow Semi Condensed text (self-hosted,
+  no Google Fonts request). The dark mode toggle is gone.
+
+---
+
+## Auto Power Off, KAMP Start G-code, Creality Print — October 19, 2026
+
+- New page **[Auto Power Off](helper-script/auto-power-off-k2.md)** (option 19):
+  supported smart plugs (Kasa, Tapo, Tasmota, Shelly, Home Assistant), setup,
+  macros, how the cool-down wait works, testing and troubleshooting. The menu
+  tables now link to it; option 19 is listed as *Step 6: Power* and in the
+  Remove menu.
+- **[Start G-code with KAMP-K2](helper-script/klipper-adaptive-meshing-and-purging-k2.md#start-g-code)**
+  is now Creality's original K2 start G-code (from Creality Print v7.3.0) with
+  the fixed purge line replaced by `LINE_PURGE` — line by line, what changed and
+  why, the print-start sequence and the console messages to expect. Works in
+  OrcaSlicer and Creality Print.
+- New page **[Creality Print](slicers/creality-print.md)**: K2 profile, Creality's
+  original start / end G-code, start G-code with KAMP-K2, *Exclude objects*.
+- KAMP needs **Exclude objects** (writes `EXCLUDE_OBJECT_DEFINE`), not *Label
+  objects* — corrected on the KAMP-K2 and OrcaSlicer pages. OrcaSlicer's K2
+  profile name is now confirmed (**Creality K2**).
 
 ---
 
@@ -50,7 +73,7 @@
 - **"Moonraker has failed plugins: update_manager"** — the update manager cannot
   run on the K2's stock Moonraker; the helper no longer adds update_manager
   sections and removes the old Mobileraker one
-  ([details](helper-script/moonraker-k2.md#update-manager-not-supported-on-the-k2)).
+  ([details](helper-script/moonraker-k2.md#update-manager-with-crealitys-moonraker)).
 - New step-by-step guide:
   [Camera in Mobileraker](helper-script/mobileraker-companion-k2.md#camera-in-mobileraker-step-by-step).
 
