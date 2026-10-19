@@ -9,7 +9,7 @@ body:
         **This is a bug report, please only post issue related to the Wiki.**
 
         All non-Wiki requests will be ignored and closed automatically.
-        If you need general support, please use [Discussions](https://github.com/Guilouz/Creality-K1-and-K1-Max/discussions) section.
+        If you need general support, please use [Discussions](https://github.com/bbraeu/Creality-Helper-Script-K2/discussions) section.
 
   - type: textarea
     id: what-happened

@@ -72,7 +72,7 @@ Entware PATH is added to `rc.local` automatically. After reboot, `opkg` and all 
 
 ## Updating Packages
 
-Use **Tools menu → 30) Update Entware packages** (`opkg update && opkg upgrade`).
+Use **Tools menu → 31) Update Entware packages** (`opkg update && opkg upgrade`).
 
 ---
 

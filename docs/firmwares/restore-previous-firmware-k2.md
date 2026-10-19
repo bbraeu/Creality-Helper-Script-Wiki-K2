@@ -3,7 +3,7 @@
 If a firmware update causes issues, you can restore a previous version using the same USB installation method used for regular updates.
 
 !!! warning "Back up first"
-    Restoring firmware can trigger a factory reset, which wipes `/mnt/UDISK/`. Back up your Klipper config **to your computer** before proceeding, e.g. create a backup with helper option 20 and download it:
+    Restoring firmware can trigger a factory reset, which wipes `/mnt/UDISK/`. Back up your Klipper config **to your computer** before proceeding, e.g. create a backup with helper option 21 and download it:
     ```bash
     scp root@<printer-ip>:/mnt/UDISK/helper-script/backups/klipper_config_*.tar.gz ./
     ```

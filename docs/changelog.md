@@ -1,5 +1,24 @@
 # Changelog
 
+## Wiki Cleanup — October 19, 2026
+
+- Removed files left over from the K1 wiki that no page used: the `downloads/`
+  folder (K1 / Ender-3 V3 stock configs, tools and OrcaSlicer profiles), about
+  30 K1 image folders, unused scripts and stylesheets, the old K2 Plus copies of
+  `helper.sh` and `scripts/` in the repository root, and a disabled deploy
+  workflow.
+- [Hostname](firmwares/ssh-connection.md): verified on the K2 — it is `K2-XXXX`
+  (K2 Pro `K2Pro-XXXX`, K2 Plus `K2Plus-XXXX`), with the last 4 characters of
+  the MAC address.
+- [Reset Factory Settings](firmwares/reset-factory-settings.md): removed the
+  `S58factoryreset` method — that script does not exist on the K2.
+- Corrected helper menu numbers: System information is option 33, Update
+  Entware packages 31, Backup Klipper configuration 21.
+- Discussions links, the issue templates and the support link now point to this
+  project instead of the K1 wiki.
+
+---
+
 ## Renamed to K2, opt-in stock config fixes — October 19, 2026
 
 - The repositories are renamed for the whole K2 series:

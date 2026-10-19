@@ -1,11 +1,8 @@
 blank_issues_enabled: false
 contact_links:
   - name: Discussions
-    url: https://github.com/Guilouz/Creality-K1-and-K1-Max/discussions
-    about: If you have questions or need support about the Wiki.
+    url: https://github.com/bbraeu/Creality-Helper-Script-K2/discussions
+    about: If you have questions or need support about the Wiki or the Helper Script.
   - name: Creality Wiki
-    url: https://wiki.creality.com/en/k1-flagship-series
+    url: https://wiki.creality.com/en/k2-flagship-series
     about: If you need info about maintenance or need troubleshooting with your printer.
-  - name: aim6mac Discord Server
-    url: https://discord.gg/eSsjXncF
-    about: If you want to discuss about Creality K1 Series.

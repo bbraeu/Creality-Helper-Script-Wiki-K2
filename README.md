@@ -45,7 +45,7 @@ unverified hardware details say so.
 
 ## Discussions
 
-[Join the discussion](https://github.com/bbraeu/Creality-Helper-Script-Wiki-K2/discussions)
+[Join the discussion](https://github.com/bbraeu/Creality-Helper-Script-K2/discussions)
 
 ## Support
 

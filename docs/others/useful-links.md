@@ -83,7 +83,7 @@
 
 | Resource | Link |
 |---|---|
-| Wiki Discussions | [github.com/bbraeu/Creality-Helper-Script-Wiki-K2/discussions](https://github.com/bbraeu/Creality-Helper-Script-Wiki-K2/discussions) |
+| Discussions | [github.com/bbraeu/Creality-Helper-Script-K2/discussions](https://github.com/bbraeu/Creality-Helper-Script-K2/discussions) |
 | Guilouz Discussions | [github.com/Guilouz/Creality-Helper-Script-Wiki/discussions](https://github.com/Guilouz/Creality-Helper-Script-Wiki/discussions) |
 
 ---

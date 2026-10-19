@@ -17,7 +17,7 @@ The K2 connects to your local WiFi network during initial setup. If you move the
 
 After connecting, the IP address is shown in **Settings → Network**.
 
-You can also find it from your router's DHCP client list — look for the printer's hostname (on the K2 Plus it is `K2Plus-XXXX`, with the last 4 characters of the MAC address; the K2 base pattern has not been verified — helper option 32 shows the hostname).
+You can also find it from your router's DHCP client list — look for the printer's hostname (`K2-XXXX` on the K2, `K2Pro-XXXX` / `K2Plus-XXXX` on the K2 Pro / K2 Plus, with the last 4 characters of the MAC address; helper option 33 shows the hostname).
 
 ---
 

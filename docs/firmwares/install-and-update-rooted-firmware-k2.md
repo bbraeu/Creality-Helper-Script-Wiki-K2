@@ -128,7 +128,7 @@ Tina 5.0, OpenWrt 21.02-SNAPSHOT
 root@<hostname>:~#
 ```
 
-On the K2 Plus the hostname is `K2Plus-XXXX`, where `XXXX` is the last 4 characters of the MAC address. The exact hostname pattern on the K2 base model has not been verified.
+The hostname is `K2-XXXX` on the K2 (`K2Pro-XXXX` on the K2 Pro, `K2Plus-XXXX` on the K2 Plus), where `XXXX` is the last 4 characters of the MAC address.
 
 ---
 

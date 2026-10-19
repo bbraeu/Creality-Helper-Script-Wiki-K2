@@ -74,7 +74,7 @@ BusyBox v1.33.2 built-in shell (ash)
 root@<hostname>:~#
 ```
 
-On the K2 Plus the hostname is `K2Plus-XXXX` (last 4 characters of the MAC address). The hostname pattern on the K2 base model has not been verified — helper option 32 (System information) shows it.
+The hostname is `K2-XXXX` on the K2 (`K2Pro-XXXX` on the K2 Pro, `K2Plus-XXXX` on the K2 Plus), where `XXXX` is the last 4 characters of the MAC address. Helper option 33 (System information) shows it.
 
 ---
 

@@ -29,20 +29,7 @@ Reconnect to your WiFi network from **Settings → Network** after restarting.
 
 ---
 
-## Method 2 — S58factoryreset Init Script
-
-!!! warning "Unverified on the K2"
-    This method was documented in the K2 Plus wiki. The K2 helper script does **not** install `S58factoryreset`, and it has not been verified that this script exists on the K2 base model. Check with `ls /etc/init.d/` before relying on it.
-
-```bash
-/etc/init.d/S58factoryreset reset
-```
-
-According to the K2 Plus wiki, this preserves user preferences and network settings while resetting printer configuration.
-
----
-
-## Method 3 — USB Drive
+## Method 2 — USB Drive
 
 Useful if the printer is not connected to the network or SSH is not available.
 
