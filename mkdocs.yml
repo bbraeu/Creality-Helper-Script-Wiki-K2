@@ -14,24 +14,12 @@ theme:
     repo: material/github
     admonition:
       note: material/information
-  font:
-    text: Roboto
-    code: Roboto Mono
+  # Colours and fonts: assets/css/theme.css (fonts self-hosted in assets/fonts)
+  font: false
   palette:
-    - media: "(prefers-color-scheme: light)"
-      scheme: default
-      primary: custom
-      accent: custom
-      toggle:
-        icon: material/brightness-7
-        name: Dark Mode
-    - media: "(prefers-color-scheme: dark)"
-      scheme: slate
-      primary: custom
-      accent: custom
-      toggle:
-        icon: material/brightness-4
-        name: Light Mode
+    scheme: default
+    primary: custom
+    accent: custom
   features:
     - navigation.indexes
     - navigation.top
@@ -43,6 +31,7 @@ theme:
     - content.code.annotate
 
 extra_css:
+  - assets/css/theme.css
   - assets/css/custom.css
 
 plugins:
@@ -113,6 +102,7 @@ nav:
           - OctoApp Companion: helper-script/octoapp-companion.md
           - Git Backup: helper-script/git-backup.md
           - Klipper Gcode Shell Command: helper-script/gcode-shell-command.md
+          - Auto Power Off: helper-script/auto-power-off-k2.md
           - SimplyPrint: helper-script/simplyprint-k2.md
           - CFS — Color Filament System: helper-script/cfs-k2.md
       - Backup & Restore Menu:
@@ -145,3 +135,4 @@ nav:
   - Slicers:
       - Slicers: slicers/index.md
       - OrcaSlicer: slicers/orcaslicer.md
+      - Creality Print: slicers/creality-print.md

@@ -1,0 +1,321 @@
+/*
+ * Colours and fonts of the wiki.
+ *   - warm concrete ground, ink text, sign-black header / footer / table heads
+ *   - amber marks what is current (active page, tab, selection, link hover)
+ *   - vermilion is reserved for the action button (.md-button)
+ *   - Big Shoulders Display 800 caps for headings, Barlow Semi Condensed for text
+ * Material sets html { font-size: 125% }, so 1rem = 20px here.
+ */
+
+@font-face {
+  font-family: "Big Shoulders Display";
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("../fonts/big-shoulders-display-latin-800-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Barlow Semi Condensed";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("../fonts/barlow-semi-condensed-latin-500-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Barlow Semi Condensed";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("../fonts/barlow-semi-condensed-latin-600-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Barlow Semi Condensed";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../fonts/barlow-semi-condensed-latin-700-normal.woff2") format("woff2");
+}
+
+:root {
+  --k2-ground: #eceae5;
+  --k2-ground-2: #e1dfd9;
+  --k2-ink: #141519;
+  --k2-ink-soft: #55575e;
+  --k2-sign: #141519;
+  --k2-on-sign: #f6f3ec;
+  --k2-lit: #ffb43a;
+  --k2-action: #c4351f;
+  --k2-action-hover: #a92c18;
+  --k2-rule: rgb(20 21 25 / 0.35);
+  --k2-heading-face: "Big Shoulders Display", "Arial Narrow", sans-serif;
+  --k2-text-face: "Barlow Semi Condensed", "Arial Narrow", Arial, sans-serif;
+  --k2-code-face: "Cascadia Mono", "SF Mono", Menlo, Consolas, ui-monospace, monospace;
+
+  --md-text-font-family: var(--k2-text-face);
+  --md-code-font-family: var(--k2-code-face);
+}
+
+[data-md-color-scheme="default"] {
+  --md-primary-fg-color: var(--k2-sign);
+  --md-primary-fg-color--light: var(--k2-sign);
+  --md-primary-fg-color--dark: var(--k2-sign);
+  --md-primary-bg-color: var(--k2-on-sign);
+  --md-primary-bg-color--light: rgb(246 243 236 / 0.8);
+  --md-accent-fg-color: var(--k2-ink);
+  --md-accent-fg-color--transparent: rgb(255 180 58 / 0.25);
+  --md-accent-bg-color: var(--k2-lit);
+
+  --md-default-bg-color: var(--k2-ground);
+  --md-default-fg-color: var(--k2-ink);
+  --md-default-fg-color--light: var(--k2-ink-soft);
+  --md-default-fg-color--lighter: var(--k2-rule);
+  --md-default-fg-color--lightest: rgb(20 21 25 / 0.12);
+
+  --md-typeset-color: var(--k2-ink);
+  --md-typeset-a-color: var(--k2-ink);
+  --md-typeset-mark-color: rgb(255 180 58 / 0.55);
+  --md-typeset-table-color: var(--k2-rule);
+
+  --md-code-bg-color: var(--k2-ground-2);
+  --md-code-fg-color: var(--k2-ink);
+
+  --md-footer-bg-color: var(--k2-sign);
+  --md-footer-bg-color--dark: var(--k2-sign);
+  --md-footer-fg-color: var(--k2-on-sign);
+  --md-footer-fg-color--light: rgb(246 243 236 / 0.8);
+  --md-footer-fg-color--lighter: rgb(246 243 236 / 0.6);
+}
+
+body {
+  background: var(--k2-ground);
+  scrollbar-color: var(--k2-ink) var(--k2-ground);
+}
+
+::selection {
+  background: var(--k2-lit);
+  color: var(--k2-ink);
+}
+
+/* ── Fonts ──────────────────────────────────────────────────────────────── */
+
+body,
+input,
+.md-typeset,
+.md-nav {
+  font-family: var(--k2-text-face);
+}
+
+.md-typeset {
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.md-typeset strong {
+  font-weight: 700;
+}
+
+.md-typeset code,
+.md-typeset kbd,
+.md-typeset pre {
+  font-family: var(--k2-code-face);
+}
+
+.md-header__title,
+.md-typeset h1,
+.md-typeset h2,
+.md-typeset h3,
+.md-typeset h4,
+.md-nav--primary .md-nav__item--section > .md-nav__link,
+.md-nav--primary .md-nav__item--nested > .md-nav__link,
+.md-typeset .admonition > .admonition-title,
+.md-typeset details > summary {
+  font-family: var(--k2-heading-face);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+
+.md-header__title {
+  font-size: 1.15rem;
+}
+
+.md-typeset h1 {
+  font-size: 2.6rem;
+  line-height: 0.95;
+  color: var(--k2-ink);
+}
+
+.md-typeset h2 {
+  font-size: 1.8rem;
+  line-height: 1;
+}
+
+.md-typeset h3 {
+  font-size: 1.3rem;
+  line-height: 1;
+}
+
+.md-typeset h4 {
+  font-size: 1.05rem;
+  line-height: 1.1;
+}
+
+.md-typeset .admonition > .admonition-title,
+.md-typeset details > summary {
+  font-size: 0.95rem;
+}
+
+/* ── Colours ────────────────────────────────────────────────────────────── */
+
+/* Links: ink text, amber underline on hover */
+.md-typeset a {
+  color: var(--k2-ink);
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+  text-decoration-color: var(--k2-rule);
+}
+.md-typeset a:hover,
+.md-typeset a:focus {
+  color: var(--k2-ink);
+  text-decoration-color: var(--k2-lit);
+}
+.md-typeset a.headerlink {
+  text-decoration: none;
+}
+
+/* Left nav */
+.md-nav__link {
+  font-weight: 600;
+  color: var(--k2-ink-soft);
+}
+.md-nav__link:hover,
+.md-nav__link:focus {
+  color: var(--k2-ink);
+}
+.md-nav--primary .md-nav__item--section > .md-nav__link,
+.md-nav--primary .md-nav__item--nested > .md-nav__link {
+  font-size: 0.95rem;
+  color: var(--k2-ink) !important;
+}
+
+/* Current page: amber, with ink text */
+.md-nav__item .md-nav__link--active {
+  background: var(--k2-lit);
+  color: var(--k2-ink) !important;
+  font-weight: 700;
+  padding: 0.1rem 0.4rem;
+  margin-left: -0.4rem;
+}
+
+/* Admonitions: sign-black title, ground-2 body */
+.md-typeset .admonition,
+.md-typeset details {
+  border-color: var(--k2-ink) !important;
+  background: var(--k2-ground-2);
+  font-size: 0.8rem;
+}
+.md-typeset .admonition > .admonition-title,
+.md-typeset details > summary {
+  background: var(--k2-sign) !important;
+  color: var(--k2-on-sign);
+}
+.md-typeset .admonition > .admonition-title::before,
+.md-typeset details > summary::before,
+.md-typeset details > summary::after {
+  background-color: var(--k2-on-sign) !important;
+}
+
+/* Warning and danger: amber title, ink lettering */
+.md-typeset .admonition.warning,
+.md-typeset .admonition.danger,
+.md-typeset details.warning,
+.md-typeset details.danger {
+  border-color: var(--k2-lit) !important;
+}
+.md-typeset .admonition.warning > .admonition-title,
+.md-typeset .admonition.danger > .admonition-title,
+.md-typeset details.warning > summary,
+.md-typeset details.danger > summary {
+  background: var(--k2-lit) !important;
+  color: var(--k2-ink);
+}
+.md-typeset .admonition.warning > .admonition-title::before,
+.md-typeset .admonition.danger > .admonition-title::before,
+.md-typeset details.warning > summary::before,
+.md-typeset details.danger > summary::before,
+.md-typeset details.warning > summary::after,
+.md-typeset details.danger > summary::after {
+  background-color: var(--k2-ink) !important;
+}
+
+/* Tables: sign-black header row */
+.md-typeset table:not([class]) {
+  font-size: 0.8rem;
+}
+.md-typeset table:not([class]) th {
+  background: var(--k2-sign);
+  color: var(--k2-on-sign);
+  font-weight: 700;
+}
+.md-typeset table:not([class]) tbody tr:hover {
+  background: rgb(255 180 58 / 0.18);
+}
+
+/* Tabs: amber bar under the current tab */
+.md-typeset .tabbed-labels > label {
+  font-weight: 700;
+  color: var(--k2-ink-soft);
+}
+.md-typeset .tabbed-set > input:checked + label,
+.md-typeset .tabbed-labels > label:hover {
+  color: var(--k2-ink);
+}
+.md-typeset .tabbed-labels::before {
+  background: var(--k2-lit);
+}
+
+/* The action button: vermilion, white caps */
+.md-typeset .md-button,
+.md-typeset .md-button--primary {
+  background: var(--k2-action);
+  border-color: var(--k2-action);
+  color: #ffffff;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+}
+.md-typeset .md-button:hover,
+.md-typeset .md-button:focus {
+  background: var(--k2-action-hover);
+  border-color: var(--k2-action-hover);
+  color: #ffffff;
+}
+
+/* Header search field on the dark header */
+.md-search__form {
+  background: rgb(246 243 236 / 0.12);
+}
+.md-search__form:hover {
+  background: rgb(246 243 236 / 0.2);
+}
+
+/* Footer links */
+.md-footer a:hover,
+.md-footer-meta a:hover {
+  color: var(--k2-on-sign);
+  text-decoration: underline;
+  text-decoration-color: var(--k2-lit);
+}
+
+/* Focus ring: ink on the ground, amber on the dark header and footer */
+:focus-visible {
+  outline: 3px solid var(--k2-ink);
+  outline-offset: 3px;
+}
+.md-header :focus-visible,
+.md-footer :focus-visible {
+  outline-color: var(--k2-lit);
+}

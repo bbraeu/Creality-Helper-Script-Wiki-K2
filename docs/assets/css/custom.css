@@ -1,10 +1,3 @@
-/* Blue section/category headers in left nav */
-.md-nav--primary .md-nav__item--section > .md-nav__link,
-.md-nav--primary .md-nav__item--nested > .md-nav__link {
-  color: #4fc3f7 !important;
-  font-weight: 700;
-}
-
 /* Hide right table of contents panel */
 .md-sidebar--secondary {
   display: none !important;
