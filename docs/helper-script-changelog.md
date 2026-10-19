@@ -8,7 +8,7 @@ this fork is based on. For the wiki's own history see the [Changelog](changelog.
 
 ---
 
-## [Unreleased]
+## [2.1.0] - 2026-10-19
 
 ### Changed
 - **Repository renamed to `Creality-Helper-Script-K2`** (wiki:
